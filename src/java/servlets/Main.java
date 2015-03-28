@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "Main", urlPatterns =
 {
-    "/"
+    "/main"
 })
 public class Main extends HttpServlet
 {

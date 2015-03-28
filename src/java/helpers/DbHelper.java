@@ -11,9 +11,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class DbHelper
 {
+
     private final String tableName;
     private final String[] tableFields;
     private final Connection connectionHandler;
@@ -23,8 +25,8 @@ public class DbHelper
         this.tableName = tableName;
         this.tableFields = tableFields;
         this.connectionHandler = connectionHandler;
-    }   
-    
+    }
+
     /**
      * @param values - klucze muszą mieć nazwy pól danej tablicy
      * @return String sql
@@ -78,7 +80,7 @@ public class DbHelper
         return sql;
     }
 
-    public String getSelectSql( HashMap where)
+    public String getSelectSql(HashMap where)
     {
         String sql = "SELECT * FROM " + tableName;
         sql += this.prepareWherePartSql(where);
@@ -192,18 +194,18 @@ public class DbHelper
      * @param query
      * @return
      */
-    public HashMap executeSelect(String query)
+    public HashMap executeSelectWithSingleRow(String query)
     {
-        HashMap returnList = new HashMap();
+        HashMap returnMap = new HashMap();
         try
         {
             Statement statement = connectionHandler.createStatement();
             ResultSet rs = statement.executeQuery(query);
             while (rs.next())
             {
-                for(int i = 0; i < tableFields.length; i++)
+                for (int i = 0; i < tableFields.length; i++)
                 {
-                    returnList.put(tableFields[i], rs.getString(tableFields[i]));
+                    returnMap.put(tableFields[i], rs.getString(tableFields[i]));
                 }
             }
         }
@@ -211,8 +213,38 @@ public class DbHelper
         {
             System.out.println("Error " + e);
         }
-        
-        return returnList;
+
+        return returnMap;
+    }
+
+    /**
+     *
+     * @param query
+     * @return
+     */
+    public LinkedList<HashMap> executeSelectWithMultipleRows(String query)
+    {
+        LinkedList list = new LinkedList();
+        HashMap map = new HashMap();
+        try
+        {
+            Statement statement = connectionHandler.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next())
+            {
+                for (int i = 0; i < tableFields.length; i++)
+                {
+                    map.put(tableFields[i], rs.getString(tableFields[i]));
+                }
+                list.add(map);
+            }
+        }
+        catch (SQLException e)
+        {
+            System.out.println("Error " + e);
+        }
+
+        return list;
     }
 
 }

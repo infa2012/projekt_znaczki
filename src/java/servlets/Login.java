@@ -5,13 +5,20 @@
  */
 package servlets;
 
+import db.DbUser;
+import helpers.AccessHelper;
+import helpers.MessageHelper;
+import helpers.SessionHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -35,21 +42,42 @@ public class Login extends HttpServlet
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
-    {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter())
+  {
+        HttpSession session = request.getSession();
+        if (AccessHelper.checkIfLoggedAsUser(session))
         {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Login</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            response.sendRedirect("404");
         }
+        else
+        {
+            boolean login_success = false;
+            if ("POST".equals(request.getMethod()))
+            {
+                DbUser dbUser = new DbUser();
+
+                HashMap fetchedUser = dbUser.accountAuthetication(request.getParameter("login"), request.getParameter("password"));
+                if (fetchedUser == null)
+                {
+                    request.setAttribute("message", MessageHelper.generateDangerMessage("Wpisane dane są niepoprawne lub dane konto nie istnieje! <a href='register' class='alert-link'>Załóz konto na stronie rejestracji!</a>"));
+                }
+                else
+                {
+                    SessionHelper.logInto(session, fetchedUser);
+                    login_success = true;
+                }
+            }
+
+            if (login_success)
+            {
+                response.sendRedirect("main");
+            }
+            else
+            {
+                RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+                rd.forward(request, response);
+            }
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

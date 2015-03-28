@@ -7,14 +7,17 @@ package db;
 
 import helpers.DbHelper;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class DbUser implements DbActionsInterface
 {
 
     private final String tableName = "user";
-    private final String[] tableFields = {"id", "name", "email"};
+    private final String[] tableFields =
+    {
+        "id", "name", "email"
+    };
     private final Connection connectionHandler = DbConnection.getInstance().getConnectionHandler();
     private final DbHelper dbHelper = new DbHelper(tableName, tableFields, connectionHandler);
 
@@ -22,26 +25,15 @@ public class DbUser implements DbActionsInterface
     public int create(HashMap values)
     {
         String query = dbHelper.getInsertSql(values);
-        int idOfInsertedRow = dbHelper.executeInsert(query, values);
-        if (idOfInsertedRow == 0)
-        {
-            try
-            {
-                throw new SQLException("Insert of this sql didn't affect. " + query);
-            }
-            catch (SQLException ex)
-            {
-                System.out.println("SQL error: " + ex.getMessage());
-            }
-        }
 
-        return idOfInsertedRow;
+        return dbHelper.executeInsert(query, values);
     }
 
     @Override
     public boolean update(HashMap values, HashMap where)
     {
         String query = dbHelper.getUpdateSql(values, where);
+
         return dbHelper.executeUpdate(query, values);
     }
 
@@ -49,6 +41,7 @@ public class DbUser implements DbActionsInterface
     public boolean delete(HashMap where)
     {
         String query = dbHelper.getDeleteSql(where);
+
         return dbHelper.executeDelete(query);
     }
 
@@ -56,6 +49,60 @@ public class DbUser implements DbActionsInterface
     public HashMap get(HashMap where)
     {
         String query = dbHelper.getSelectSql(where);
-        return dbHelper.executeSelect(query);
+        query += " LIMIT 1";
+
+        return dbHelper.executeSelectWithSingleRow(query);
+    }
+
+    @Override
+    public LinkedList<HashMap> getAll(HashMap where)
+    {
+        String query = dbHelper.getSelectSql(where);
+
+        return null;
+    }
+
+    /**
+     *
+     * @param email
+     * @return
+     */
+    public boolean checkIfEmailOccupied(String email)
+    {
+        HashMap where = new HashMap();
+        where.put("email", email);
+        HashMap result = this.get(where);
+
+        return !result.isEmpty();
+    }
+
+    /**
+     *
+     * @param login
+     * @return
+     */
+    public boolean checkIfLoginOccupied(String login)
+    {
+        HashMap where = new HashMap();
+        where.put("login", login);
+        HashMap result = this.get(where);
+
+        return !result.isEmpty();
+    }
+
+    /**
+     *
+     * @param login
+     * @param password
+     * @return HashMap jeśli użytkownik istnieje, null jeśli nie.
+     */
+    public HashMap accountAuthetication(String login, String password)
+    {
+        HashMap where = new HashMap();
+        where.put("login", login);
+        where.put("password", password);
+        HashMap result = this.get(where);
+
+        return !result.isEmpty() ? result : null;
     }
 }

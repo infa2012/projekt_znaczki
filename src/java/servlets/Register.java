@@ -5,13 +5,19 @@
  */
 package servlets;
 
+import db.DbUser;
+import helpers.AccessHelper;
+import helpers.MessageHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -36,20 +42,59 @@ public class Register extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter())
+
+        HttpSession session = request.getSession();
+        if (AccessHelper.checkIfLoggedAsUser(session) && AccessHelper.checkIfLoggedAsAdmin(session))
         {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Register</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Register at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            response.sendRedirect("404");
         }
+        else
+        {
+            if ("POST".equals(request.getMethod()))
+            {
+                DbUser dbUser = new DbUser();
+                boolean validate = true;
+                String message = "";
+
+                if (dbUser.checkIfEmailOccupied(request.getParameter("email")))
+                {
+                    validate = false;
+                    message = "Wybrany adres e-mail jest już zajęty";
+                }
+
+                if (dbUser.checkIfLoginOccupied(request.getParameter("login")))
+                {
+                    validate = false;
+                    message = "Wybrany login jest już zajęty";
+                }
+
+                if (validate)
+                {
+                    HashMap user = new HashMap();
+                    user.put("login", request.getParameter("login"));
+                    user.put("name", request.getParameter("name"));
+                    user.put("password", request.getParameter("password"));
+                    user.put("surname", request.getParameter("surname"));
+                    user.put("email", request.getParameter("email"));
+                    if (dbUser.create(user) != 0)
+                    {
+                        request.setAttribute("message", MessageHelper.generateSuccessMessage("Pomyślnie utworzono konto!"));
+                    }
+                    else
+                    {
+                        request.setAttribute("message", MessageHelper.generateDangerMessage("Wystąpił błąd!"));
+                    }
+                }
+                else
+                {
+                    request.setAttribute("message", MessageHelper.generateDangerMessage(message));
+                }
+            }
+
+            RequestDispatcher rd = request.getRequestDispatcher("register.jsp");
+            rd.forward(request, response);
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

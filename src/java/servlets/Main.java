@@ -38,9 +38,9 @@ public class Main extends HttpServlet
     {
         DbUser dbUser = new DbUser();
         HashMap where = new HashMap();
-        where.put("id", 7);
+        where.put("email", "test@o2.pl");
         
-        request.setAttribute("user", dbUser.get(where));
+        request.setAttribute("users", dbUser.getAll(where));
         RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
         rd.forward(request, response);
     }

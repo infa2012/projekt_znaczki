@@ -9,6 +9,10 @@
     </jsp:attribute>
 
     <jsp:body>
-
+        <c:forEach items="${users}" var="user">
+            ${user.id}<br>
+            ${user.name}<br>
+            ${user.email}<br><br>
+        </c:forEach>
     </jsp:body>
 </t:template>

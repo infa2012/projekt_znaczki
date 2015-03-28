@@ -58,8 +58,8 @@ public class DbUser implements DbActionsInterface
     public LinkedList<HashMap> getAll(HashMap where)
     {
         String query = dbHelper.getSelectSql(where);
-
-        return null;
+        
+        return dbHelper.executeSelectWithMultipleRows(query);
     }
 
     /**

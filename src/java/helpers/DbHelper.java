@@ -83,7 +83,7 @@ public class DbHelper
     public String getSelectSql(HashMap where)
     {
         String sql = "SELECT * FROM " + tableName;
-        sql += this.prepareWherePartSql(where);
+        sql += where != null ? this.prepareWherePartSql(where) : "";
 
         return sql;
     }
@@ -225,17 +225,19 @@ public class DbHelper
     public LinkedList<HashMap> executeSelectWithMultipleRows(String query)
     {
         LinkedList list = new LinkedList();
-        HashMap map = new HashMap();
+        
         try
         {
             Statement statement = connectionHandler.createStatement();
             ResultSet rs = statement.executeQuery(query);
             while (rs.next())
             {
+                HashMap map = new HashMap();
                 for (int i = 0; i < tableFields.length; i++)
                 {
                     map.put(tableFields[i], rs.getString(tableFields[i]));
-                }
+                    System.out.println(rs.getString(tableFields[i]));
+                }                
                 list.add(map);
             }
         }

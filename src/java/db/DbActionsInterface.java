@@ -8,7 +8,11 @@ package db;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-
+/**
+ * Podstawowe akcje, które powinny się znaleźć w każdej klasie reprezentującą daną tabelkę bazodanową
+ * 
+ * @author gohzno
+ */
 interface DbActionsInterface
 {
     /**
@@ -37,7 +41,9 @@ interface DbActionsInterface
     public HashMap get(HashMap where);
     
     /**
-     * @param where
+     * Jeśli ma nie być warunki w tej metodzie, dajemy jako argument nulla'
+     * 
+     * @param where - HashMap lub null
      * @return 
      */
     public LinkedList<HashMap> getAll(HashMap where);

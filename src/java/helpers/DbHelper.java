@@ -14,13 +14,22 @@ import java.util.HashMap;
 
 public class DbHelper
 {
+    private final String tableName;
+    private final String[] tableFields;
+    private final Connection connectionHandler;
 
+    public DbHelper(String tableName, String[] tableFields, Connection connectionHandler)
+    {
+        this.tableName = tableName;
+        this.tableFields = tableFields;
+        this.connectionHandler = connectionHandler;
+    }   
+    
     /**
-     * @param tableName
      * @param values - klucze muszą mieć nazwy pól danej tablicy
      * @return String sql
      */
-    public String getInsertSql(String tableName, HashMap values)
+    public String getInsertSql(HashMap values)
     {
         String sql = "INSERT INTO " + tableName + " (";
         for (Object key : values.keySet())
@@ -41,11 +50,10 @@ public class DbHelper
     }
 
     /**
-     * @param tableName
      * @param values - klucze muszą mieć nazwy pól danej tablicy
      * @return String sql
      */
-    public String getUpdateSql(String tableName, HashMap values, HashMap where)
+    public String getUpdateSql(HashMap values, HashMap where)
     {
         String sql = "UPDATE " + tableName + " SET ";
         for (Object key : values.keySet())
@@ -59,11 +67,10 @@ public class DbHelper
     }
 
     /**
-     * @param tableName
      * @param where - klucze muszą mieć nazwy pól danej tablicy
      * @return String sql
      */
-    public String getDeleteSql(String tableName, HashMap where)
+    public String getDeleteSql(HashMap where)
     {
         String sql = "DELETE FROM " + tableName;
         sql += this.prepareWherePartSql(where);
@@ -71,7 +78,7 @@ public class DbHelper
         return sql;
     }
 
-    public String getSelectSql(String tableName, HashMap where)
+    public String getSelectSql( HashMap where)
     {
         String sql = "SELECT * FROM " + tableName;
         sql += this.prepareWherePartSql(where);
@@ -99,11 +106,10 @@ public class DbHelper
     /**
      *
      * @param query
-     * @param connectionHandler
      * @param values - klucze muszą mieć nazwy pól danej tablicy
      * @return
      */
-    public int executeInsert(String query, Connection connectionHandler, HashMap values)
+    public int executeInsert(String query, HashMap values)
     {
         int idOfInsertedRow = 0;
         try
@@ -136,11 +142,10 @@ public class DbHelper
     /**
      *
      * @param query
-     * @param connectionHandler
      * @param values - klucze muszą mieć nazwy pól danej tablicy
      * @return
      */
-    public boolean executeUpdate(String query, Connection connectionHandler, HashMap values)
+    public boolean executeUpdate(String query, HashMap values)
     {
         try
         {
@@ -164,10 +169,9 @@ public class DbHelper
     /**
      *
      * @param query
-     * @param connectionHandler
      * @return
      */
-    public boolean executeDelete(String query, Connection connectionHandler)
+    public boolean executeDelete(String query)
     {
         try
         {
@@ -186,15 +190,13 @@ public class DbHelper
     /**
      *
      * @param query
-     * @param connectionHandler
      * @return
      */
-    public HashMap executeSelect(String query, Connection connectionHandler, String[] tableFields)
+    public HashMap executeSelect(String query)
     {
         HashMap returnList = new HashMap();
         try
         {
-
             Statement statement = connectionHandler.createStatement();
             ResultSet rs = statement.executeQuery(query);
             while (rs.next())
@@ -207,7 +209,7 @@ public class DbHelper
         }
         catch (SQLException e)
         {
-            System.out.print("Error " + e);
+            System.out.println("Error " + e);
         }
         
         return returnList;

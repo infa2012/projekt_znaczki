@@ -5,8 +5,10 @@
  */
 package servlets;
 
+import db.DbUser;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,6 +36,11 @@ public class Main extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
+        DbUser dbUser = new DbUser();
+        HashMap where = new HashMap();
+        where.put("id", 7);
+        
+        request.setAttribute("user", dbUser.get(where));
         RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
         rd.forward(request, response);
     }

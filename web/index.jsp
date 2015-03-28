@@ -6,5 +6,7 @@
 <t:template>
     <jsp:body>
         index jsp sie odpala
+        <br>
+        ${user.name}
     </jsp:body>
 </t:template>

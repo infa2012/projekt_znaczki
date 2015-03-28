@@ -13,6 +13,7 @@ public class DbUser implements DbActionsInterface
 {
 
     private final String tableName = "user";
+    private final String[] tableFields = {"id", "name", "email"};
     private final Connection connectionHandler = DbConnection.getInstance().getConnectionHandler();
     private final DbHelper dbHelper = new DbHelper();
 
@@ -44,8 +45,9 @@ public class DbUser implements DbActionsInterface
     }
 
     @Override
-    public boolean get(HashMap where, String orderBy, String limit)
+    public HashMap get(HashMap where)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String query = dbHelper.getSelectSql(tableName, where);
+        return dbHelper.executeSelect(query, connectionHandler, tableFields);
     }
 }

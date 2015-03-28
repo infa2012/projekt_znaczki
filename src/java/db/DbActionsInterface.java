@@ -13,5 +13,5 @@ interface DbActionsInterface
     public int create(HashMap values);
     public boolean update(HashMap values, HashMap where);
     public boolean delete(HashMap where);
-    public boolean get(HashMap where, String orderBy, String limit);
+    public HashMap get(HashMap where);
 }

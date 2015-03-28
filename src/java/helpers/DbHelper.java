@@ -71,6 +71,14 @@ public class DbHelper
         return sql;
     }
 
+    public String getSelectSql(String tableName, HashMap where)
+    {
+        String sql = "SELECT * FROM " + tableName;
+        sql += this.prepareWherePartSql(where);
+
+        return sql;
+    }
+
     /**
      * Generuje część sql'a związanego z warunkami WHERE
      *
@@ -153,6 +161,12 @@ public class DbHelper
         return true;
     }
 
+    /**
+     *
+     * @param query
+     * @param connectionHandler
+     * @return
+     */
     public boolean executeDelete(String query, Connection connectionHandler)
     {
         try
@@ -165,8 +179,38 @@ public class DbHelper
         {
             System.out.print("Error " + e);
         }
-        
+
         return true;
+    }
+
+    /**
+     *
+     * @param query
+     * @param connectionHandler
+     * @return
+     */
+    public HashMap executeSelect(String query, Connection connectionHandler, String[] tableFields)
+    {
+        HashMap returnList = new HashMap();
+        try
+        {
+
+            Statement statement = connectionHandler.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next())
+            {
+                for(int i = 0; i < tableFields.length; i++)
+                {
+                    returnList.put(tableFields[i], rs.getString(tableFields[i]));
+                }
+            }
+        }
+        catch (SQLException e)
+        {
+            System.out.print("Error " + e);
+        }
+        
+        return returnList;
     }
 
 }

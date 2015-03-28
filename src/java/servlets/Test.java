@@ -19,12 +19,12 @@ public class Test
     {
         DbUser dbUser = new DbUser();
         
-        HashMap values = new HashMap();
-        values.put("name", "John");
-        values.put("email", "johny@o2.pl");
+//        HashMap values = new HashMap();
+//        values.put("name", "John");
+//        values.put("email", "johny@o2.pl");
         HashMap where = new HashMap();
-        where.put("id", 5);
-        dbUser.update(values, where);
+        where.put("name", "John");
+        dbUser.delete(where);
 //        System.out.println(id);
         
     }

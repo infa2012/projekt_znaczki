@@ -39,7 +39,8 @@ public class DbUser implements DbActionsInterface
     @Override
     public boolean delete(HashMap where)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String query = dbHelper.getDeleteSql(tableName, where);
+        return dbHelper.executeDelete(query, connectionHandler);
     }
 
     @Override

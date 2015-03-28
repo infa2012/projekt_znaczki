@@ -58,6 +58,26 @@ public class DbHelper
         return sql;
     }
 
+    /**
+     * @param tableName
+     * @param where - klucze muszą mieć nazwy pól danej tablicy
+     * @return String sql
+     */
+    public String getDeleteSql(String tableName, HashMap where)
+    {
+        String sql = "DELETE FROM " + tableName;
+        sql += this.prepareWherePartSql(where);
+
+        return sql;
+    }
+
+    /**
+     * Generuje część sql'a związanego z warunkami WHERE
+     *
+     * @param where - kluczem jest nazwa pola w bazie danych, a z wartością
+     * wiadomo.
+     * @return
+     */
     private String prepareWherePartSql(HashMap where)
     {
         String sql = " WHERE ";
@@ -68,6 +88,13 @@ public class DbHelper
         return StringHelper.cutLastChars(sql, 1);
     }
 
+    /**
+     *
+     * @param query
+     * @param connectionHandler
+     * @param values - klucze muszą mieć nazwy pól danej tablicy
+     * @return
+     */
     public int executeInsert(String query, Connection connectionHandler, HashMap values)
     {
         int idOfInsertedRow = 0;
@@ -83,7 +110,7 @@ public class DbHelper
             }
             statement.executeUpdate();
             ResultSet generatedKeys = statement.getGeneratedKeys();
-          
+
             if (generatedKeys.next())
             {
                 idOfInsertedRow = generatedKeys.getInt(1);
@@ -98,6 +125,13 @@ public class DbHelper
         return idOfInsertedRow;
     }
 
+    /**
+     *
+     * @param query
+     * @param connectionHandler
+     * @param values - klucze muszą mieć nazwy pól danej tablicy
+     * @return
+     */
     public boolean executeUpdate(String query, Connection connectionHandler, HashMap values)
     {
         try
@@ -116,6 +150,22 @@ public class DbHelper
             System.out.print("Error " + e);
         }
 
+        return true;
+    }
+
+    public boolean executeDelete(String query, Connection connectionHandler)
+    {
+        try
+        {
+            PreparedStatement statement = null;
+            statement = connectionHandler.prepareStatement(query);
+            statement.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+            System.out.print("Error " + e);
+        }
+        
         return true;
     }
 

@@ -100,9 +100,9 @@ public class DbHelper
         String sql = " WHERE ";
         for (Object key : where.keySet())
         {
-            sql += key + " = '" + where.get(key).toString() + "',";
+            sql += key + " = '" + where.get(key).toString() + "' AND ";
         }
-        return StringHelper.cutLastChars(sql, 1);
+        return StringHelper.cutLastChars(sql, 5);
     }
 
     /**
@@ -135,7 +135,8 @@ public class DbHelper
         }
         catch (SQLException e)
         {
-            System.out.print("Error " + e);
+            System.out.println("\n Query: " + query + "\n");
+            System.out.println("Error " + e + "\n");
         }
 
         return idOfInsertedRow;
@@ -162,7 +163,8 @@ public class DbHelper
         }
         catch (SQLException e)
         {
-            System.out.print("Error " + e);
+            System.out.println("\n Query: " + query + "\n");
+            System.out.println("Error " + e + "\n");
         }
 
         return true;
@@ -183,7 +185,8 @@ public class DbHelper
         }
         catch (SQLException e)
         {
-            System.out.print("Error " + e);
+            System.out.println("\n Query: " + query + "\n");
+            System.out.println("Error " + e + "\n");
         }
 
         return true;
@@ -211,7 +214,8 @@ public class DbHelper
         }
         catch (SQLException e)
         {
-            System.out.println("Error " + e);
+            System.out.println("\n Query: " + query + "\n");
+            System.out.println("Error " + e + "\n");
         }
 
         return returnMap;
@@ -225,7 +229,7 @@ public class DbHelper
     public LinkedList<HashMap> executeSelectWithMultipleRows(String query)
     {
         LinkedList list = new LinkedList();
-        
+
         try
         {
             Statement statement = connectionHandler.createStatement();
@@ -237,13 +241,14 @@ public class DbHelper
                 {
                     map.put(tableFields[i], rs.getString(tableFields[i]));
                     System.out.println(rs.getString(tableFields[i]));
-                }                
+                }
                 list.add(map);
             }
         }
         catch (SQLException e)
         {
-            System.out.println("Error " + e);
+            System.out.println("\n Query: " + query + "\n");
+            System.out.println("Error " + e + "\n");
         }
 
         return list;

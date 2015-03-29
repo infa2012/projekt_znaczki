@@ -1,7 +1,12 @@
 
 import db.DbUser;
+import helpers.ConsoleHelper;
 import java.util.HashMap;
 import java.util.LinkedList;
+import static org.fusesource.jansi.Ansi.Color.RED;
+import static org.fusesource.jansi.Ansi.Color.YELLOW;
+import static org.fusesource.jansi.Ansi.ansi;
+import org.fusesource.jansi.AnsiConsole;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -17,11 +22,7 @@ public class Test
 
     public static void main(String[] args)
     {
-        DbUser dbUser = new DbUser();
-        HashMap where = new HashMap();
-        where.put("email", "test@o2.pl");
 
-        LinkedList list = dbUser.getAll(where);
-        System.out.println(list);
+  
     }
 }

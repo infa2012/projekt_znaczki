@@ -5,6 +5,7 @@
  */
 package helpers;
 
+import db.DbConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -82,7 +83,7 @@ public class DbHelper
 
     public String getSelectSql(HashMap where)
     {
-        String sql = "SELECT * FROM " + tableName;
+        String sql = "SELECTt * FROM " + tableName;
         sql += where != null ? this.prepareWherePartSql(where) : "";
 
         return sql;
@@ -109,7 +110,7 @@ public class DbHelper
      *
      * @param query
      * @param values - klucze muszą mieć nazwy pól danej tablicy
-     * @return
+     * @return Zwraca ID stworzenego wpisu
      */
     public int executeInsert(String query, HashMap values)
     {
@@ -131,12 +132,10 @@ public class DbHelper
             {
                 idOfInsertedRow = generatedKeys.getInt(1);
             }
-
         }
         catch (SQLException e)
         {
-            System.out.println("\n Query: " + query + "\n");
-            System.out.println("Error " + e + "\n");
+            ExceptionHelper.displaySqlExpcetionError(e, query);
         }
 
         return idOfInsertedRow;
@@ -163,8 +162,7 @@ public class DbHelper
         }
         catch (SQLException e)
         {
-            System.out.println("\n Query: " + query + "\n");
-            System.out.println("Error " + e + "\n");
+            ExceptionHelper.displaySqlExpcetionError(e, query);
         }
 
         return true;
@@ -185,8 +183,7 @@ public class DbHelper
         }
         catch (SQLException e)
         {
-            System.out.println("\n Query: " + query + "\n");
-            System.out.println("Error " + e + "\n");
+            ExceptionHelper.displaySqlExpcetionError(e, query);
         }
 
         return true;
@@ -214,8 +211,7 @@ public class DbHelper
         }
         catch (SQLException e)
         {
-            System.out.println("\n Query: " + query + "\n");
-            System.out.println("Error " + e + "\n");
+            ExceptionHelper.displaySqlExpcetionError(e, query);
         }
 
         return returnMap;
@@ -224,7 +220,7 @@ public class DbHelper
     /**
      *
      * @param query
-     * @return
+     * @return Lista z HashMapami w środku
      */
     public LinkedList<HashMap> executeSelectWithMultipleRows(String query)
     {
@@ -240,18 +236,70 @@ public class DbHelper
                 for (int i = 0; i < tableFields.length; i++)
                 {
                     map.put(tableFields[i], rs.getString(tableFields[i]));
-                    System.out.println(rs.getString(tableFields[i]));
                 }
                 list.add(map);
             }
         }
         catch (SQLException e)
         {
-            System.out.println("\n Query: " + query + "\n");
-            System.out.println("Error " + e + "\n");
+            ExceptionHelper.displaySqlExpcetionError(e, query);
         }
 
         return list;
+    }
+
+    private LinkedList getTableColumns()
+    {
+        DbConnection dbConnection = DbConnection.getInstance();
+        LinkedList columns = new LinkedList();
+
+        String query = "SELECTt `COLUMN_NAME` \n"
+                + "FROM `INFORMATION_SCHEMA`.`COLUMNS` \n"
+                + "WHERE `TABLE_SCHEMA`='" + dbConnection.getDbName() + "' \n"
+                + "    AND `TABLE_NAME`='" + tableName + "'";
+
+        try
+        {
+            Statement statement = connectionHandler.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next())
+            {
+                columns.add(rs.getString("COLUMN_NAME"));
+            }
+        }
+        catch (SQLException e)
+        {
+            ExceptionHelper.displaySqlExpcetionError(e, query);
+        }
+
+        return columns;
+    }
+
+    /**
+     * Sprawdza czy definicje pól zawarte w zmiennej 'tableFields' są takie same
+     * jak nazwy kolumn w bazie danych
+     *
+     * @return
+     */
+    public boolean checkIfMappedTableFielsAreUpToDateWithDatabase()
+    {
+        LinkedList tableColumns = this.getTableColumns();
+        // Najpierw jest sprawdzane czy lista i tablica posiadają tyle same elementów. Jeśli nie to oczywiste jest, że ich zawartość jest różna.
+        if (tableColumns.size() != tableFields.length)
+        {
+            return false;
+        }
+
+        // Sprawdzamy czy zawartość listy i tabeli jest taka sama.
+        for (String tableField : tableFields)
+        {
+            if (!tableColumns.contains(tableField))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 }

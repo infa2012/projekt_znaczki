@@ -5,17 +5,20 @@
  */
 package helpers;
 
+import java.sql.SQLException;
+
 /**
  *
  * @author m.rudz
  */
 public class MessageHelper
 {
+
     public static String generateDangerMessage(String message)
     {
-        return "<div class=\"alert alert-dismissable alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>" + message + "</div>";    
+        return "<div class=\"alert alert-dismissable alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>" + message + "</div>";
     }
-    
+
     public static String generateSuccessMessage(String message)
     {
         return "<div class=\"alert alert-dismissable alert-success\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>" + message + "</div>";

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class DbConnection {
 
-    private Connection connection_handler;
+    private Connection connectionHandler;
     private final String dbName = "projekt_znaczki";
     private final String dbUser = "root";
     private final String dbPassword = "";
@@ -21,7 +21,7 @@ public class DbConnection {
 
     private DbConnection() 
     {
-        this.connection_handler = null;
+        this.connectionHandler = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -29,7 +29,7 @@ public class DbConnection {
             System.exit(-1);
         }
         try {
-            this.connection_handler = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + dbName + "?useUnicode=true&characterEncoding=utf-8", dbUser, dbPassword);
+            this.connectionHandler = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + dbName + "?useUnicode=true&characterEncoding=utf-8", dbUser, dbPassword);
 
         } catch (SQLException e) {
             System.out.println("Can't connect to database: " + e);
@@ -41,17 +41,24 @@ public class DbConnection {
     
     public Connection getConnectionHandler()
     {
-        return connection_handler;
+        return connectionHandler;
     }
 
     public void close() {
         try {
-            connection_handler.close();
+            connectionHandler.close();
         } catch (SQLException e) {
             System.out.print("Error on closing database connection");
             System.exit(-1);
         }
         System.out.print("Database connection closed successfully");
     }
+
+    public String getDbName()
+    {
+        return dbName;
+    }
+    
+    
 
 }

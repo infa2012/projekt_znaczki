@@ -16,7 +16,7 @@ public class DbUser implements DbActionsInterface
     private final String tableName = "user";
     private final String[] tableFields =
     {
-        "id", "name", "email"
+        "id", "name", "surname","login", "email", "password", "phone_number","created_at"
     };
     private final Connection connectionHandler = DbConnection.getInstance().getConnectionHandler();
     private final DbHelper dbHelper = new DbHelper(tableName, tableFields, connectionHandler);
@@ -105,4 +105,16 @@ public class DbUser implements DbActionsInterface
 
         return !result.isEmpty() ? result : null;
     }
+    
+    public boolean checkIfMappedTableFielsAreUpToDateWithDatabase()
+    {
+        return dbHelper.checkIfMappedTableFielsAreUpToDateWithDatabase();
+    }
+
+    public String getTableName()
+    {
+        return tableName;
+    }
+    
+    
 }

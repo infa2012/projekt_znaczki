@@ -19,18 +19,18 @@ public class SessionHelper
     {
         synchronized (session)
         {
-            session.setAttribute("user_id", user.get("user_id"));
+            session.setAttribute("user_id", user.get("id"));
             session.setAttribute("login", user.get("login"));
             session.setAttribute("name", user.get("name"));
             session.setAttribute("surname", user.get("surname"));
-            if("1".equals(user.get("is_admin").toString()))
-            {
-                session.setAttribute("is_admin", true);
-            }
-            else
-            {
-                session.setAttribute("is_admin", null);
-            }
+//            if("1".equals(user.get("is_admin").toString()))
+//            {
+//                session.setAttribute("is_admin", true);
+//            }
+//            else
+//            {
+//                session.setAttribute("is_admin", null);
+//            }
         }
     }
 }

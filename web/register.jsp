@@ -16,25 +16,25 @@
             <div class="form-group">
                 <label for="name" class="col-sm-2 control-label">Imię*</label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Imię">                                       
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Imię" value="${param["name"]}">                                       
                 </div>
             </div>
             <div class="form-group">
                 <label for="surname" class="col-sm-2 control-label">Nazwisko*</label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" id="surname" placeholder="Nazwisko" name="surname">
+                    <input type="text" class="form-control" id="surname" placeholder="Nazwisko" name="surname" value="${param["surname"]}">
                 </div>
             </div>
             <div class="form-group">
                 <label for="login" class="col-sm-2 control-label">Login*</label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" id="login" placeholder="Login" name="login">
+                    <input type="text" class="form-control" id="login" placeholder="Login" name="login" value="${param["login"]}">
                 </div>
             </div>
             <div class="form-group">
                 <label for="email" class="col-sm-2 control-label">E-mail*</label>
                 <div class="col-sm-5">
-                    <input type="email" class="form-control" id="email" name="email" placeholder="E-mail">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="E-mail" value="${param["email"]}">
                 </div>
             </div>
             <div class="form-group" id="haslo_form_group">

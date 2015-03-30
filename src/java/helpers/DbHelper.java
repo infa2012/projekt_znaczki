@@ -83,7 +83,7 @@ public class DbHelper
 
     public String getSelectSql(HashMap where)
     {
-        String sql = "SELECTt * FROM " + tableName;
+        String sql = "SELECT * FROM " + tableName;
         sql += where != null ? this.prepareWherePartSql(where) : "";
 
         return sql;
@@ -253,7 +253,7 @@ public class DbHelper
         DbConnection dbConnection = DbConnection.getInstance();
         LinkedList columns = new LinkedList();
 
-        String query = "SELECTt `COLUMN_NAME` \n"
+        String query = "SELECT `COLUMN_NAME` \n"
                 + "FROM `INFORMATION_SCHEMA`.`COLUMNS` \n"
                 + "WHERE `TABLE_SCHEMA`='" + dbConnection.getDbName() + "' \n"
                 + "    AND `TABLE_NAME`='" + tableName + "'";

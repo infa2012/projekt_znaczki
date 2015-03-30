@@ -9,7 +9,6 @@ import db.DbUser;
 import helpers.AccessHelper;
 import helpers.MessageHelper;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -90,7 +89,7 @@ public class Register extends HttpServlet
                     request.setAttribute("message", MessageHelper.generateDangerMessage(message));
                 }
             }
-
+            
             RequestDispatcher rd = request.getRequestDispatcher("register.jsp");
             rd.forward(request, response);
         }

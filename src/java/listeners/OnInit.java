@@ -37,9 +37,7 @@ public class OnInit implements ServletContextListener
             DbUser dbUser = new DbUser();
             dbUserMap.put("result", dbUser.checkIfMappedTableFielsAreUpToDateWithDatabase());
             dbUserMap.put("table_name", dbUser.getTableName());
-            
-            
-            
+                                    
             resultsOfChecking.add(dbUserMap);
 
             for (HashMap dbClass : resultsOfChecking)

@@ -22,7 +22,8 @@ public class Test
 
     public static void main(String[] args)
     {
-
+        DbUser dbUser = new DbUser();
+        System.out.println(dbUser.checkIfEmailOccupied("gohanzoo@o2.pl"));
   
     }
 }

@@ -14,7 +14,7 @@
             <div class="form-group">
                 <label for="login" class="col-sm-2 control-label">Login*</label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" id="login" name="login" placeholder="Login">
+                    <input type="text" class="form-control" id="login" name="login" placeholder="Login" value="${param["login"]}">
                 </div>
             </div>
             <div class="form-group" id="haslo_form_group">

@@ -74,27 +74,7 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">                                                                                                    
-                        <c:choose> 
-                            <c:when test="${sessionScope.is_admin != null}">
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Panel admina <b class="caret"></b></a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="users">Użytkownicy</a>
-                                        </li>
-                                        <li>
-                                            <a href="keywords">Zabronione słowa</a>
-                                        </li>
-                                        <li>
-                                            <a href="add_news">Dodaj newsa</a>
-                                        </li>
-                                        <li>
-                                            <a href="reported_announcements">Zgłoszone do moderacji ogłoszenia</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </c:when>     
-                        </c:choose>
+ 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Użytkownik <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -158,7 +138,7 @@
             <footer>
                 <div class="row">
                     <div class="col-lg-12">
-                        <p>Copyright &copy; Serwis ogłoszeń 2015</p>
+                        <p>Copyright &copy; Znaczki 2015</p>
                     </div>
                 </div>
             </footer>

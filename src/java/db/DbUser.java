@@ -12,11 +12,11 @@ import java.util.LinkedList;
 
 public class DbUser implements DbActionsInterface
 {
-
+    
     private final String tableName = "user";
     private final String[] tableFields =
     {
-        "id", "name", "surname","login", "email", "password", "phone_number","created_at"
+        "id", "name", "surnamee", "login", "email", "password", "phone_number", "created_at"
     };
     private final Connection connectionHandler = DbConnection.getInstance().getConnectionHandler();
     private final DbHelper dbHelper = new DbHelper(tableName, tableFields, connectionHandler);
@@ -58,8 +58,14 @@ public class DbUser implements DbActionsInterface
     public LinkedList<HashMap> getAll(HashMap where)
     {
         String query = dbHelper.getSelectSql(where);
-        
+
         return dbHelper.executeSelectWithMultipleRows(query);
+    }
+
+    @Override
+    public String getTableName()
+    {
+        return tableName;
     }
 
     /**
@@ -105,16 +111,10 @@ public class DbUser implements DbActionsInterface
 
         return !result.isEmpty() ? result : null;
     }
-    
+
     public boolean checkIfMappedTableFielsAreUpToDateWithDatabase()
     {
         return dbHelper.checkIfMappedTableFielsAreUpToDateWithDatabase();
     }
 
-    public String getTableName()
-    {
-        return tableName;
-    }
-    
-    
 }

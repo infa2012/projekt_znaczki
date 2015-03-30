@@ -8,7 +8,7 @@ package helpers;
 import javax.servlet.http.HttpSession;
 
 /**
- *  Klasa helpra obsługująca kwestie dostępowe
+ *  Klasa helpera obsługująca kwestie dostępowe
  */
 public class AccessHelper
 {

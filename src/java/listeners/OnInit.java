@@ -34,6 +34,7 @@ public class OnInit implements ServletContextListener
             LinkedList<HashMap> resultsOfChecking = new LinkedList<>();
 
             HashMap dbUserMap = new HashMap();
+            
             DbUser dbUser = new DbUser();
             dbUserMap.put("result", dbUser.checkIfMappedTableFielsAreUpToDateWithDatabase());
             dbUserMap.put("table_name", dbUser.getTableName());

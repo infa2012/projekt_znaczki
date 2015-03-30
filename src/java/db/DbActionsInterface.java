@@ -15,6 +15,7 @@ import java.util.LinkedList;
  */
 interface DbActionsInterface
 {
+    
     /**
      * @param values
      * @return 
@@ -47,4 +48,6 @@ interface DbActionsInterface
      * @return 
      */
     public LinkedList<HashMap> getAll(HashMap where);
+    
+    public String getTableName();
 }

@@ -5,23 +5,24 @@
  */
 package servlets;
 
-import db.DbUser;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-
-@WebServlet(name = "Main", urlPatterns =
+/**
+ *
+ * @author gohzno
+ */
+@WebServlet(name = "logout", urlPatterns =
 {
-    "/main"
+    "/logout"
 })
-public class Main extends HttpServlet
+public class Logout extends HttpServlet
 {
 
     /**
@@ -35,14 +36,10 @@ public class Main extends HttpServlet
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
-    {
-        DbUser dbUser = new DbUser();
-        HashMap where = new HashMap();
-        where.put("email", "test@o2.pl");
-        
-        request.setAttribute("users", dbUser.getAll(where));
-        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-        rd.forward(request, response);
+     {                
+        HttpSession session = request.getSession();
+        session.invalidate();
+        response.sendRedirect("main");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

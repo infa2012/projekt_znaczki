@@ -5,23 +5,23 @@
  */
 package servlets;
 
-import db.DbUser;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-@WebServlet(name = "Main", urlPatterns =
+/**
+ *
+ * @author gohzno
+ */
+@WebServlet(name = "profile", urlPatterns =
 {
-    "/main"
+    "/profile"
 })
-public class Main extends HttpServlet
+public class Profile extends HttpServlet
 {
 
     /**
@@ -36,13 +36,20 @@ public class Main extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
-        DbUser dbUser = new DbUser();
-        HashMap where = new HashMap();
-        where.put("email", "test@o2.pl");
-        
-        request.setAttribute("users", dbUser.getAll(where));
-        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-        rd.forward(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter())
+        {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Profile</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet Profile at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

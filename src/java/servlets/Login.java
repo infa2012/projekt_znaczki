@@ -6,6 +6,9 @@
 package servlets;
 
 import db.DbUser;
+import helpers.AccessHelper;
+import helpers.MessageHelper;
+import helpers.SessionHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -15,13 +18,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-
-@WebServlet(name = "Main", urlPatterns =
+/**
+ *
+ * @author gohzno
+ */
+@WebServlet(name = "login", urlPatterns =
 {
-    "/main"
+    "/login"
 })
-public class Main extends HttpServlet
+public class Login extends HttpServlet
 {
 
     /**
@@ -35,14 +42,42 @@ public class Main extends HttpServlet
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
-    {
-        DbUser dbUser = new DbUser();
-        HashMap where = new HashMap();
-        where.put("email", "test@o2.pl");
-        
-        request.setAttribute("users", dbUser.getAll(where));
-        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-        rd.forward(request, response);
+  {
+        HttpSession session = request.getSession();
+        if (AccessHelper.checkIfLoggedAsUser(session))
+        {
+            response.sendRedirect("404");
+        }
+        else
+        {
+            boolean login_success = false;
+            if ("POST".equals(request.getMethod()))
+            {
+                DbUser dbUser = new DbUser();
+
+                HashMap fetchedUser = dbUser.accountAuthetication(request.getParameter("login"), request.getParameter("password"));
+                if (fetchedUser == null)
+                {
+                    request.setAttribute("message", MessageHelper.generateDangerMessage("Wpisane dane są niepoprawne lub dane konto nie istnieje! <a href='register' class='alert-link'>Załóz konto na stronie rejestracji!</a>"));
+                }
+                else
+                {
+                    SessionHelper.logInto(session, fetchedUser);
+                    login_success = true;
+                }
+            }
+
+            if (login_success)
+            {
+                response.sendRedirect("main");
+            }
+            else
+            {
+                RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+                rd.forward(request, response);
+            }
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

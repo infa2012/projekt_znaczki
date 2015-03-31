@@ -5,10 +5,8 @@
  */
 package servlets;
 
-import db.DbUser;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,12 +14,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-@WebServlet(name = "Main", urlPatterns =
+/**
+ *
+ * @author m.rudz
+ */
+@WebServlet(name = "404", urlPatterns =
 {
-    "/main"
+    "/404"
 })
-public class Main extends HttpServlet
+public class Error_404 extends HttpServlet
 {
 
     /**
@@ -36,12 +37,7 @@ public class Main extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
-        DbUser dbUser = new DbUser();
-        HashMap where = new HashMap();
-        where.put("email", "test@o2.pl");
-        
-        request.setAttribute("users", dbUser.getAll(where));
-        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("404.jsp");
         rd.forward(request, response);
     }
 

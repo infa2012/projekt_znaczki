@@ -6,8 +6,9 @@
 package servlets;
 
 import db.DbUser;
+import helpers.AccessHelper;
+import helpers.MessageHelper;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,13 +16,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-
-@WebServlet(name = "Main", urlPatterns =
+/**
+ *
+ * @author gohzno
+ */
+@WebServlet(name = "register", urlPatterns =
 {
-    "/main"
+    "/register"
 })
-public class Main extends HttpServlet
+public class Register extends HttpServlet
 {
 
     /**
@@ -36,13 +41,59 @@ public class Main extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
-        DbUser dbUser = new DbUser();
-        HashMap where = new HashMap();
-        where.put("email", "test@o2.pl");
-        
-        request.setAttribute("users", dbUser.getAll(where));
-        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-        rd.forward(request, response);
+
+        HttpSession session = request.getSession();
+        if (AccessHelper.checkIfLoggedAsUser(session) && AccessHelper.checkIfLoggedAsAdmin(session))
+        {
+            response.sendRedirect("404");
+        }
+        else
+        {
+            if ("POST".equals(request.getMethod()))
+            {
+                DbUser dbUser = new DbUser();
+                boolean validate = true;
+                String message = "";
+
+                if (dbUser.checkIfEmailOccupied(request.getParameter("email")))
+                {
+                    validate = false;
+                    message = "Wybrany adres e-mail jest już zajęty";
+                }
+
+                if (dbUser.checkIfLoginOccupied(request.getParameter("login")))
+                {
+                    validate = false;
+                    message = "Wybrany login jest już zajęty";
+                }
+
+                if (validate)
+                {
+                    HashMap user = new HashMap();
+                    user.put("login", request.getParameter("login"));
+                    user.put("name", request.getParameter("name"));
+                    user.put("password", request.getParameter("password"));
+                    user.put("surname", request.getParameter("surname"));
+                    user.put("email", request.getParameter("email"));
+                    if (dbUser.create(user) != 0)
+                    {
+                        request.setAttribute("message", MessageHelper.generateSuccessMessage("Pomyślnie utworzono konto!"));
+                    }
+                    else
+                    {
+                        request.setAttribute("message", MessageHelper.generateDangerMessage("Wystąpił błąd!"));
+                    }
+                }
+                else
+                {
+                    request.setAttribute("message", MessageHelper.generateDangerMessage(message));
+                }
+            }
+            
+            RequestDispatcher rd = request.getRequestDispatcher("register.jsp");
+            rd.forward(request, response);
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

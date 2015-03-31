@@ -6,6 +6,9 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+    <listener>
+        <listener-class>listeners.OnInit</listener-class>
+    </listener>
 </web-app>

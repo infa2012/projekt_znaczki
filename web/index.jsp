@@ -4,7 +4,15 @@
 
 
 <t:template>
+    <jsp:attribute name="page_header">
+        Strona główna
+    </jsp:attribute>
+
     <jsp:body>
-        index jsp sie odpala
+        <c:forEach items="${users}" var="user">
+            ${user.id}<br>
+            ${user.name}<br>
+            ${user.email}<br><br>
+        </c:forEach>
     </jsp:body>
 </t:template>

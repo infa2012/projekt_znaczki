@@ -5,13 +5,19 @@
  */
 package servlets;
 
+import db.DbUser;
+import helpers.AccessHelper;
+import helpers.MessageHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -36,19 +42,66 @@ public class Profile extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter())
+        HttpSession session = request.getSession();
+        //sprawdzamy czy parametr GET - id jest liczbą
+        
+        if (!AccessHelper.checkIfLoggedAsUser(session))
         {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Profile</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Profile at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            response.sendRedirect("404");
+        }
+        else
+        {
+            DbUser dbUser = new DbUser();
+            HashMap whereClause = new HashMap();
+            whereClause.put("id", session.getAttribute("user_id").toString());
+
+            if ("POST".equals(request.getMethod()))
+            {
+                boolean validate = true;
+                String message = "";
+                HashMap userProfileData = dbUser.get(whereClause);
+
+                if (!userProfileData.get("email").toString().equals(request.getParameter("email")) && dbUser.checkIfEmailOccupied(request.getParameter("email")))
+                {
+                    validate = false;
+                    message = "Wybrany adres e-mail jest już zajęty";
+                }
+
+                if (!userProfileData.get("login").toString().equals(request.getParameter("login")) && dbUser.checkIfLoginOccupied(request.getParameter("login")))
+                {
+                    validate = false;
+                    message = "Wybrany login jest już zajęty";
+                }
+
+                if (validate)
+                {
+                    HashMap userPostedFormData = new HashMap();
+                    userPostedFormData.put("login", request.getParameter("login"));
+                    userPostedFormData.put("name", request.getParameter("name"));
+                    userPostedFormData.put("surname", request.getParameter("surname"));
+                    userPostedFormData.put("email", request.getParameter("email"));
+                                    
+
+                    if (dbUser.update(userPostedFormData, whereClause))
+                    {
+                        request.setAttribute("message", MessageHelper.generateSuccessMessage("Pomyślnie zmieniono dane!"));
+                    }
+                    else
+                    {
+                        request.setAttribute("message", MessageHelper.generateDangerMessage("Wystąpił niespodziewany błąd!"));
+                    }
+                }
+                else
+                {
+                    request.setAttribute("message", MessageHelper.generateDangerMessage(message));
+                }
+            }
+
+            HashMap userProfileData = dbUser.get(whereClause);
+            request.setAttribute("user", userProfileData);
+            RequestDispatcher rd = request.getRequestDispatcher("profile.jsp");
+            rd.forward(request, response);
+
         }
     }
 

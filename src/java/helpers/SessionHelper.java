@@ -23,14 +23,7 @@ public class SessionHelper
             session.setAttribute("login", user.get("login"));
             session.setAttribute("name", user.get("name"));
             session.setAttribute("surname", user.get("surname"));
-//            if("1".equals(user.get("is_admin").toString()))
-//            {
-//                session.setAttribute("is_admin", true);
-//            }
-//            else
-//            {
-//                session.setAttribute("is_admin", null);
-//            }
+            session.setAttribute("user_type_id", user.get("user_type_id"));
         }
     }
 }

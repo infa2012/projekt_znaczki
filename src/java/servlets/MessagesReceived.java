@@ -42,8 +42,7 @@ public class MessagesReceived extends HttpServlet
             throws ServletException, IOException
     {
         HttpSession session = request.getSession();
-
-        if (!AccessHelper.checkIfLoggedAsUser(session))
+        if (!AccessHelper.checkIfLoggedAsUser(session) && !AccessHelper.checkIfLoggedAsModerator(session))
         {
             response.sendRedirect("404");
         }

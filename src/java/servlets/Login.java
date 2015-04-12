@@ -45,12 +45,12 @@ public class Login extends HttpServlet
             throws ServletException, IOException
   {
         HttpSession session = request.getSession();
-        if (AccessHelper.checkIfLoggedAsUser(session))
+        if (AccessHelper.checkIfLoggedAsSomeone(session))
         {
             response.sendRedirect("404");
         }
         else
-        {
+        {                                   
             boolean login_success = false;
             if ("POST".equals(request.getMethod()))
             {

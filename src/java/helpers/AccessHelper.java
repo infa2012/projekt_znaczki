@@ -8,36 +8,74 @@ package helpers;
 import javax.servlet.http.HttpSession;
 
 /**
- *  Klasa helpera obsługująca kwestie dostępowe
+ * Klasa helpera obsługująca kwestie dostępowe
  */
 public class AccessHelper
 {
 
     /**
      * Sprawdzamy czy użytkownik jest zalogowany jako użytkownik
+     *
      * @param session
      * @return boolean
      */
     public static boolean checkIfLoggedAsUser(HttpSession session)
     {
-        if (session.getAttribute("user_id") == null || session.getAttribute("user_id").equals(""))
-        {
-            return false;
-        }
-        else
+        if (session.getAttribute("user_type_id") != null && Integer.parseInt(session.getAttribute("user_type_id").toString()) == 1)
         {
             return true;
         }
+        else
+        {
+            return false;
+        }
     }
-    
+
+    /**
+     * Sprawdzamy czy użytkownik jest zalogowany jako moderator
+     *
+     * @param session
+     * @return boolean
+     */
+    public static boolean checkIfLoggedAsModerator(HttpSession session)
+    {
+        if (session.getAttribute("user_type_id") != null && Integer.parseInt(session.getAttribute("user_type_id").toString()) == 2)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     /**
      * Sprawdzamy czy użytkownik jest zalogowany jako admin
+     *
      * @param session
      * @return boolean
      */
     public static boolean checkIfLoggedAsAdmin(HttpSession session)
     {
-        if (session.getAttribute("is_admin") != null)
+        if (session.getAttribute("user_type_id") != null && Integer.parseInt(session.getAttribute("user_type_id").toString()) == 3)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /**
+     * Sprawdzamy czy użytkownik jest zalogowany jako ktokolwiek :D
+     *
+     * @param session
+     * @return boolean
+     */
+    public static boolean checkIfLoggedAsSomeone(HttpSession session)
+    {
+        if (session.getAttribute("user_id") != null || "".equals(session.getAttribute("user_id")))
         {
             return true;
         }

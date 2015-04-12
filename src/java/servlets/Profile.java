@@ -44,7 +44,7 @@ public class Profile extends HttpServlet
     {
         HttpSession session = request.getSession();
 
-        if (!AccessHelper.checkIfLoggedAsUser(session))
+        if (!AccessHelper.checkIfLoggedAsSomeone(session))
         {
             response.sendRedirect("404");
         }

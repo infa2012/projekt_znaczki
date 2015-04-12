@@ -3,6 +3,7 @@ import db.DbUser;
 import helpers.ConsoleHelper;
 import java.util.HashMap;
 import java.util.LinkedList;
+import org.apache.commons.codec.digest.DigestUtils;
 import static org.fusesource.jansi.Ansi.Color.RED;
 import static org.fusesource.jansi.Ansi.Color.YELLOW;
 import static org.fusesource.jansi.Ansi.ansi;
@@ -22,8 +23,7 @@ public class Test
 
     public static void main(String[] args)
     {
-        DbUser dbUser = new DbUser();
-        System.out.println(dbUser.checkIfEmailOccupied("gohanzoo@o2.pl"));
+        
   
     }
 }

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -71,8 +72,8 @@ public class Register extends HttpServlet
                 {
                     HashMap user = new HashMap();
                     user.put("login", request.getParameter("login"));
-                    user.put("name", request.getParameter("name"));
-                    user.put("password", request.getParameter("password"));
+                    user.put("name", request.getParameter("name"));                    
+                    user.put("password", DigestUtils.sha1Hex(request.getParameter("password")));
                     user.put("surname", request.getParameter("surname"));
                     user.put("email", request.getParameter("email"));
                     if (dbUser.create(user) != 0)

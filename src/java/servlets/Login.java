@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -55,7 +56,7 @@ public class Login extends HttpServlet
             {
                 DbUser dbUser = new DbUser();
 
-                HashMap fetchedUser = dbUser.accountAuthetication(request.getParameter("login"), request.getParameter("password"));
+                HashMap fetchedUser = dbUser.accountAuthetication(request.getParameter("login"), DigestUtils.sha1Hex(request.getParameter("password")));
                 if (fetchedUser == null)
                 {
                     request.setAttribute("message", MessageHelper.generateDangerMessage("Wpisane dane są niepoprawne lub dane konto nie istnieje! <a href='register' class='alert-link'>Załóz konto na stronie rejestracji!</a>"));

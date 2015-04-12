@@ -5,9 +5,11 @@
  */
 package servlets;
 
+import db.DbMessage;
 import helpers.AccessHelper;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.LinkedList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -47,6 +49,12 @@ public class MessagesReceived extends HttpServlet
         }
         else
         {
+            DbMessage dbMessage = new DbMessage();
+            HashMap whereClause = new HashMap();
+            whereClause.put("recipient", session.getAttribute("user_id"));            
+            LinkedList receivedMessages = dbMessage.getAll(whereClause);
+            
+            request.setAttribute("receivedMessages", receivedMessages);
             RequestDispatcher rd = request.getRequestDispatcher("messages_received.jsp");
             rd.forward(request, response);
         }

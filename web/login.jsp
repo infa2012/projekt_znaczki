@@ -34,11 +34,11 @@
                 rules: {
                     password: {
                         required: true,
-                        rangelength: [5, 50]
+                        rangelength: [4, 50]
                     },
                     login: {
                         required: true,
-                        rangelength: [5, 50]
+                        rangelength: [4, 50]
                     }
                 }
             });

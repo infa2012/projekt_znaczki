@@ -16,7 +16,7 @@ public class DbUser implements DbActionsInterface
     private final String tableName = "user";
     private final String[] tableFields =
     {
-        "id", "name", "surname", "login", "email", "password", "phone_number", "created_at"
+        "id", "user_type_id", "name", "surname", "login", "email", "password", "phone_number", "created_at", "address", "city", "country"
     };
     private final Connection connectionHandler = DbConnection.getInstance().getConnectionHandler();
     private final DbHelper dbHelper = new DbHelper(tableName, tableFields, connectionHandler);

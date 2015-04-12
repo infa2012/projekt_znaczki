@@ -37,6 +37,25 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="email" class="col-sm-2 control-label">Adres</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="address" name="address" value="${user.address}" placeholder="Adres">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email" class="col-sm-2 control-label">Miasto</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="city" name="city" value="${user.city}" placeholder="miasto">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email" class="col-sm-2 control-label">Państwo</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="country" name="country" value="${user.country}" placeholder="Państwo">
+                </div>
+            </div>
+
+            <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-5">
                     <div class="checkbox">
                         <label>

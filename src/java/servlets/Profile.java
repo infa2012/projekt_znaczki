@@ -44,7 +44,7 @@ public class Profile extends HttpServlet
     {
         HttpSession session = request.getSession();
         //sprawdzamy czy parametr GET - id jest liczbą
-        
+
         if (!AccessHelper.checkIfLoggedAsUser(session))
         {
             response.sendRedirect("404");
@@ -80,7 +80,9 @@ public class Profile extends HttpServlet
                     userPostedFormData.put("name", request.getParameter("name"));
                     userPostedFormData.put("surname", request.getParameter("surname"));
                     userPostedFormData.put("email", request.getParameter("email"));
-                                    
+                    userPostedFormData.put("address", request.getParameter("address"));
+                    userPostedFormData.put("city", request.getParameter("city"));
+                    userPostedFormData.put("country", request.getParameter("country"));
 
                     if (dbUser.update(userPostedFormData, whereClause))
                     {

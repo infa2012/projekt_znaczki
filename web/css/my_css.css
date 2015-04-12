@@ -1,8 +1,17 @@
 #log_info
 {
-position: relative;
-display: block;
-padding: 15px 15px;
-line-height: 20px;
-color: #9d9d9d;
+    position: relative;
+    display: block;
+    padding: 15px 15px;
+    line-height: 20px;
+    color: #9d9d9d;
+}
+
+.textarea-resize-vertical
+{
+    resize: vertical;
+}
+.textarea-resize-horizontal
+{
+    resize: horizontal;
 }

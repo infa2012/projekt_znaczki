@@ -22,6 +22,10 @@
                 <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="headingOne">
                         <h4 class="panel-title">
+                            <a href="#" class="btn btn-success btn-sm">Gohanzo</a>
+                            &nbsp;
+                            /
+                            &nbsp;
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                 Jakiś temat czegoś tasm
                             </a>
@@ -37,9 +41,13 @@
                 <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="headingTwo">
                         <h4 class="panel-title">
+                            <a href="#" class="btn btn-default btn-sm">Morkix</a>
+                            &nbsp;
+                            /
+                            &nbsp;
                             <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                 Inny jeszcze temat
-                            </a>
+                            </a> 
                             <span class="pull-right">28.01.2015 15:48:30</span>
                         </h4>
                     </div>
@@ -52,6 +60,10 @@
                 <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="headingThree">
                         <h4 class="panel-title">
+                            <a href="#" class="btn btn-default btn-sm">Morkix</a>
+                            &nbsp;
+                            /
+                            &nbsp;
                             <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                 Coś tam coś
                             </a>

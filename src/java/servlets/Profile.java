@@ -43,7 +43,6 @@ public class Profile extends HttpServlet
             throws ServletException, IOException
     {
         HttpSession session = request.getSession();
-        //sprawdzamy czy parametr GET - id jest liczbą
 
         if (!AccessHelper.checkIfLoggedAsUser(session))
         {

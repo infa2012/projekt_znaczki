@@ -12,7 +12,7 @@ import java.util.LinkedList;
 
 public class DbUser implements DbActionsInterface
 {
-    
+
     private final String tableName = "user";
     private final String[] tableFields =
     {
@@ -68,6 +68,12 @@ public class DbUser implements DbActionsInterface
         return tableName;
     }
 
+    @Override
+    public boolean checkIfMappedTableFielsAreUpToDateWithDatabase()
+    {
+        return dbHelper.checkIfMappedTableFielsAreUpToDateWithDatabase();
+    }
+
     /**
      *
      * @param email
@@ -111,10 +117,4 @@ public class DbUser implements DbActionsInterface
 
         return !result.isEmpty() ? result : null;
     }
-
-    public boolean checkIfMappedTableFielsAreUpToDateWithDatabase()
-    {
-        return dbHelper.checkIfMappedTableFielsAreUpToDateWithDatabase();
-    }
-
 }

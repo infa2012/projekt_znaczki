@@ -13,10 +13,10 @@ import java.util.LinkedList;
 public class DbMessage implements DbActionsInterface
 {
     
-    private final String tableName = "user";
+    private final String tableName = "message";
     private final String[] tableFields =
     {
-        "id", "user_type_id", "name", "surname", "login", "email", "password", "phone_number", "created_at", "address", "city", "country"
+        "id", "content", "topic", "created_at", "sender", "recipient"
     };
     private final Connection connectionHandler = DbConnection.getInstance().getConnectionHandler();
     private final DbHelper dbHelper = new DbHelper(tableName, tableFields, connectionHandler);
@@ -68,50 +68,7 @@ public class DbMessage implements DbActionsInterface
         return tableName;
     }
 
-    /**
-     *
-     * @param email
-     * @return
-     */
-    public boolean checkIfEmailOccupied(String email)
-    {
-        HashMap where = new HashMap();
-        where.put("email", email);
-        HashMap result = this.get(where);
-
-        return !result.isEmpty();
-    }
-
-    /**
-     *
-     * @param login
-     * @return
-     */
-    public boolean checkIfLoginOccupied(String login)
-    {
-        HashMap where = new HashMap();
-        where.put("login", login);
-        HashMap result = this.get(where);
-
-        return !result.isEmpty();
-    }
-
-    /**
-     *
-     * @param login
-     * @param password
-     * @return HashMap jeśli użytkownik istnieje, null jeśli nie.
-     */
-    public HashMap accountAuthetication(String login, String password)
-    {
-        HashMap where = new HashMap();
-        where.put("login", login);
-        where.put("password", password);
-        HashMap result = this.get(where);
-
-        return !result.isEmpty() ? result : null;
-    }
-
+    @Override
     public boolean checkIfMappedTableFielsAreUpToDateWithDatabase()
     {
         return dbHelper.checkIfMappedTableFielsAreUpToDateWithDatabase();

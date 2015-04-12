@@ -50,4 +50,6 @@ interface DbActionsInterface
     public LinkedList<HashMap> getAll(HashMap where);
     
     public String getTableName();
+    
+    public boolean checkIfMappedTableFielsAreUpToDateWithDatabase();
 }

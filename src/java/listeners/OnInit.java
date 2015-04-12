@@ -5,6 +5,7 @@
  */
 package listeners;
 
+import db.DbMessage;
 import db.DbUser;
 import helpers.ConsoleHelper;
 import java.util.HashMap;
@@ -34,12 +35,17 @@ public class OnInit implements ServletContextListener
             LinkedList<HashMap> resultsOfChecking = new LinkedList<>();
 
             HashMap dbUserMap = new HashMap();
-            
+            HashMap dbMessageMap = new HashMap();
+
             DbUser dbUser = new DbUser();
             dbUserMap.put("result", dbUser.checkIfMappedTableFielsAreUpToDateWithDatabase());
             dbUserMap.put("table_name", dbUser.getTableName());
-                                    
+            DbMessage dbMessage = new DbMessage();
+            dbMessageMap.put("result", dbMessage.checkIfMappedTableFielsAreUpToDateWithDatabase());
+            dbMessageMap.put("table_name", dbMessage.getTableName());
+
             resultsOfChecking.add(dbUserMap);
+            resultsOfChecking.add(dbMessageMap);
 
             for (HashMap dbClass : resultsOfChecking)
             {
@@ -48,7 +54,7 @@ public class OnInit implements ServletContextListener
                     tableName = dbClass.get("table_name");
                     throw new RuntimeException();
                 }
-            }                    
+            }
         }
         catch (RuntimeException ex)
         {

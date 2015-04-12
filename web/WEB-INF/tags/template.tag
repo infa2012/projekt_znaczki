@@ -89,6 +89,9 @@
                                     </c:when>
                                     <c:otherwise>
                                         <li>
+                                            <a href="messages_received">Wiadomości</a>
+                                        </li>
+                                        <li>
                                             <a href="profile">Profil</a>
                                         </li>
 

@@ -1,4 +1,5 @@
 
+import db.DbMessage;
 import db.DbUser;
 import helpers.ConsoleHelper;
 import java.util.HashMap;
@@ -23,7 +24,9 @@ public class Test
 
     public static void main(String[] args)
     {
-        
+        DbMessage dbMessage = new DbMessage();                   
+        LinkedList receivedMessages = dbMessage.getReceivedMessages(2);
+        System.out.println(receivedMessages);
   
     }
 }

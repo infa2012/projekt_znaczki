@@ -17,7 +17,7 @@
                 <a href="messages_sended" class="list-group-item">Wysłane</a>
             </div>
         </div>
-        <div class="col-lg-9">      
+        <div class="col-lg-9">                
             <c:choose> 
                 <c:when test="${fn:length(receivedMessages) > 0}">
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -25,7 +25,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="Heading-${message.id}">
                                     <h4 class="panel-title">
-                                        <a href="#" class="btn btn-success btn-sm">Gohanzo</a>
+                                        <a href="user?id=${message.sender_id}" class="btn btn-success btn-sm">${message.login}</a>
                                         &nbsp;
                                         /
                                         &nbsp;
@@ -35,7 +35,7 @@
                                         &nbsp;
                                         /
                                         &nbsp;
-                                        <a href="message_write?recipient=1&message_answer=1" class="btn btn-default btn-sm">Odpisz!</a>
+                                        <a href="message_write?recipient=${message.sender_id}&message_answer=${message.id}" class="btn btn-default btn-sm">Odpisz!</a>
                                         <span class="pull-right">${message.created_at}</span>
                                     </h4>
                                 </div>

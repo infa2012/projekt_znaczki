@@ -48,10 +48,8 @@ public class MessagesReceived extends HttpServlet
         }
         else
         {
-            DbMessage dbMessage = new DbMessage();
-            HashMap whereClause = new HashMap();
-            whereClause.put("recipient", session.getAttribute("user_id"));            
-            LinkedList receivedMessages = dbMessage.getAll(whereClause);
+            DbMessage dbMessage = new DbMessage();                   
+            LinkedList receivedMessages = dbMessage.getReceivedMessages(Integer.parseInt(session.getAttribute("user_id").toString()));
             
             request.setAttribute("receivedMessages", receivedMessages);
             RequestDispatcher rd = request.getRequestDispatcher("messages_received.jsp");

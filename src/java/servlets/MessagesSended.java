@@ -51,10 +51,8 @@ public class MessagesSended extends HttpServlet
         else
         {
             DbMessage dbMessage = new DbMessage();
-            HashMap whereClause = new HashMap();
-            whereClause.put("sender", session.getAttribute("user_id"));
-            LinkedList sendedMessages = dbMessage.getAll(whereClause);
-
+            LinkedList sendedMessages = dbMessage.getSendedMessages(Integer.parseInt(session.getAttribute("user_id").toString()));
+            
             request.setAttribute("sendedMessages", sendedMessages);
             RequestDispatcher rd = request.getRequestDispatcher("messages_sended.jsp");
             rd.forward(request, response);

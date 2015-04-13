@@ -25,13 +25,13 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="Heading-${message.id}">
                                     <h4 class="panel-title">
-                                        <a href="#" class="btn btn-success btn-sm">Gohanzo</a>
+                                        <a href="user?id=${message.recipient_id}" class="btn btn-success btn-sm">${message.login}</a>
                                         &nbsp;
                                         /
                                         &nbsp;
                                         <a data-toggle="collapse" data-parent="#accordion" href="#${message.id}-collapse" aria-expanded="true" aria-controls="${message.id}-collapse">
                                             ${message.topic}
-                                        </a>         
+                                        </a>
                                         <span class="pull-right">${message.created_at}</span>
                                     </h4>
                                 </div>

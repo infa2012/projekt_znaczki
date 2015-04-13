@@ -15,7 +15,7 @@ import java.util.LinkedList;
 
 public class DbMessage implements DbActionsInterface
 {
-    
+
     private final String tableName = "message";
     private final String[] tableFields =
     {
@@ -76,13 +76,13 @@ public class DbMessage implements DbActionsInterface
     {
         return dbHelper.checkIfMappedTableFielsAreUpToDateWithDatabase();
     }
-    
+
     public LinkedList<HashMap> getReceivedMessages(int userId)
     {
         String query = "SELECT m.id as message_id, m.topic, m.content, m.created_at, u.login, u.id as sender_id FROM message m, user u WHERE m.recipient = '" + userId + "' AND u.id = m.sender ORDER BY m.created_at DESC";
-        
+
         LinkedList<HashMap> messagesList = new LinkedList<>();
-        
+
         try
         {
             Statement statement = this.connectionHandler.createStatement();
@@ -105,7 +105,39 @@ public class DbMessage implements DbActionsInterface
         {
             System.out.print("Error " + e);
         }
-        
+
+        return messagesList;
+    }
+
+    public LinkedList<HashMap> getSendedMessages(int userId)
+    {
+        String query = "SELECT m.id as message_id, m.topic, m.content, m.created_at, u.login, u.id as recipient_id FROM message m, user u WHERE m.sender = '" + userId + "' AND u.id = m.recipient ORDER BY m.created_at DESC";
+
+        LinkedList<HashMap> messagesList = new LinkedList<>();
+
+        try
+        {
+            Statement statement = this.connectionHandler.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next())
+            {
+                HashMap message = new HashMap();
+                message.put("login", rs.getString("login"));
+                message.put("recipient_id", rs.getString("recipient_id"));
+                message.put("id", rs.getString("message_id"));
+                message.put("topic", rs.getString("topic"));
+                message.put("content", rs.getString("content"));
+                message.put("created_at", rs.getString("created_at"));
+                messagesList.add(message);
+            }
+
+        }
+        catch (SQLException e)
+        {
+            System.out.print("Error " + e);
+        }
+
         return messagesList;
     }
 

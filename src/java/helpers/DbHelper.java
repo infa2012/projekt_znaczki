@@ -119,7 +119,6 @@ public class DbHelper
         {
             PreparedStatement statement = null;
             statement = connectionHandler.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-
             Object[] arrayWithValues = values.values().toArray();
             for (int i = 0; i < values.size(); i++)
             {

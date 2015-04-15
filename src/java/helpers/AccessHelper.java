@@ -86,11 +86,31 @@ public class AccessHelper
         }
     }
 
-    public static boolean checkGETParamNumber(HttpServletRequest request, String param)
+    public static boolean checkGETParamNumberNotNull(HttpServletRequest request, String param)
     {
         if (request.getParameter(param) == null || !request.getParameter(param).matches("^\\d+$"))
         {
             return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    public static boolean checkGETParamNumberCanBeNull(HttpServletRequest request, String param)
+    {
+        if (request.getParameter(param) != null)
+        {
+            if(!request.getParameter(param).matches("^\\d+$"))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+            
         }
         else
         {

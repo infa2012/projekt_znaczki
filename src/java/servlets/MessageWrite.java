@@ -5,9 +5,15 @@
  */
 package servlets;
 
+import db.DbMessage;
+import db.DbUser;
 import helpers.AccessHelper;
+import helpers.MessageHelper;
+import helpers.SessionHelper;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.LinkedList;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,15 +46,66 @@ public class MessageWrite extends HttpServlet
             throws ServletException, IOException
     {
         HttpSession session = request.getSession();
-
-        if (!AccessHelper.checkIfLoggedAsUser(session) && !AccessHelper.checkIfLoggedAsModerator(session))
+        if ((!AccessHelper.checkIfLoggedAsUser(session) && !AccessHelper.checkIfLoggedAsModerator(session)) || !AccessHelper.checkGETParamNumberCanBeNull(request, "message_answer") || !AccessHelper.checkGETParamNumberNotNull(request, "recipient"))
         {
             response.sendRedirect("404");
         }
         else
         {
-            RequestDispatcher rd = request.getRequestDispatcher("message_write.jsp");
-            rd.forward(request, response);
+            DbMessage dbMessage = new DbMessage();
+            boolean error = false;
+
+            if (request.getParameter("message_answer") != null)
+            {
+                HashMap whereClause = new HashMap();
+                whereClause.put("id", request.getParameter("message_answer"));
+                whereClause.put("recipient", session.getAttribute("user_id"));
+                whereClause.put("sender", request.getParameter("recipient"));
+
+                HashMap messageToAnswer = dbMessage.get(whereClause);
+                System.out.println(messageToAnswer);
+                if (!messageToAnswer.isEmpty())
+                {
+                    request.setAttribute("messageToAnswer", messageToAnswer);
+                }
+                else
+                {
+                    error = true;
+                }
+            }
+
+            if ("POST".equals(request.getMethod()))
+            {
+                HashMap values = new HashMap();
+                values.put("topic", request.getParameter("topic"));
+                values.put("content", request.getParameter("content"));
+                values.put("sender", session.getAttribute("user_id"));
+                values.put("recipient", request.getParameter("recipient"));
+
+                if (dbMessage.create(values) != 0)
+                {
+                    request.setAttribute("message", MessageHelper.generateSuccessMessage("Pomyślnie wysłano wiadomość!"));
+                }
+                else
+                {
+                    request.setAttribute("message", MessageHelper.generateDangerMessage("Wystąpił błąd! Spróbuj ponownie później."));
+                }
+            }
+
+            if (error == true)
+            {
+                response.sendRedirect("404");
+            }
+            else
+            {
+                LinkedList receivedMessages = dbMessage.getReceivedMessages(Integer.parseInt(session.getAttribute("user_id").toString()));
+                LinkedList sendedMessages = dbMessage.getSendedMessages(Integer.parseInt(session.getAttribute("user_id").toString()));
+
+                request.setAttribute("sendedMessages", sendedMessages);
+                request.setAttribute("receivedMessages", receivedMessages);
+                RequestDispatcher rd = request.getRequestDispatcher("message_write.jsp");
+                rd.forward(request, response);
+            }
         }
     }
 

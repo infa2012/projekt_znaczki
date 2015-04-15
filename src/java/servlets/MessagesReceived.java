@@ -50,7 +50,9 @@ public class MessagesReceived extends HttpServlet
         {
             DbMessage dbMessage = new DbMessage();                   
             LinkedList receivedMessages = dbMessage.getReceivedMessages(Integer.parseInt(session.getAttribute("user_id").toString()));
+            LinkedList sendedMessages = dbMessage.getSendedMessages(Integer.parseInt(session.getAttribute("user_id").toString()));
             
+            request.setAttribute("sendedMessages", sendedMessages);
             request.setAttribute("receivedMessages", receivedMessages);
             RequestDispatcher rd = request.getRequestDispatcher("messages_received.jsp");
             rd.forward(request, response);

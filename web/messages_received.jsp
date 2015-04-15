@@ -12,9 +12,11 @@
         <div class="col-lg-3">
             <div class="list-group">
                 <a href="messages_received" class="list-group-item active">
-                    Odebrane
+                    Odebrane <span class="badge">${fn:length(receivedMessages)}</span>
                 </a>
-                <a href="messages_sended" class="list-group-item">Wysłane</a>
+                <a href="messages_sended" class="list-group-item">
+                    Wysłane <span class="badge">${fn:length(sendedMessages)}</span>
+                </a>
             </div>
         </div>
         <div class="col-lg-9">                

@@ -5,6 +5,7 @@
  */
 package helpers;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -82,6 +83,18 @@ public class AccessHelper
         else
         {
             return false;
+        }
+    }
+
+    public static boolean checkGETParamNumber(HttpServletRequest request, String param)
+    {
+        if (request.getParameter(param) == null || !request.getParameter(param).matches("^\\d+$"))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
         }
     }
 }

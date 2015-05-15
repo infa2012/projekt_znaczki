@@ -114,7 +114,7 @@
                                     <span id="log_info">Nie jesteś zalogowany</span>
                                 </c:when>
                                 <c:otherwise>
-                                    <span id="log_info">Jesteś zalogowany jako <strong>${sessionScope.login}</strong></span>
+                                    <span id="log_info">Jesteś zalogowany jako <a href="user?id=${sessionScope.user_id}"><strong>${sessionScope.login}</strong></a></span>
                                 </c:otherwise>
                             </c:choose>
 

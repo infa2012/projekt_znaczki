@@ -1,0 +1,36 @@
+.quiasi-image{
+    width: 120px;
+    height: 120px;
+    background-color: rgb(190,190,190);
+}
+
+.quiasi-image-center{
+    width: 100%;
+    height: 100%;
+    padding-top: 50%;
+    padding-left: 50%;
+}
+
+.quiasi-image-center>*{
+    margin-left: -50%;
+    margin-top: -50%;
+    font-size: 45px;
+    color: rgb(190,190,190);
+}
+
+.panel a:hover{
+    text-decoration: none;
+}
+
+.stamp-notes {
+    min-width: 152px;
+}
+.stamp-notes:before {
+  content: "";
+  width: 15em;
+  display: block;
+  overflow: hidden;
+}
+.stamp-date {
+    color: gray;
+}

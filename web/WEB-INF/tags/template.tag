@@ -21,11 +21,13 @@
         <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link href="css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
         <link href="css/jquery.dataTables_themeroller.css" rel="stylesheet">
+        <link href="css/stamps.css" rel="stylesheet">
 
         <script src="js/jquery.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.validate.min.js"></script>
         <script src="js/jquery.dataTables.min.js"></script>
+        <script src="js/holder.min.js"></script>
         <script type="text/javascript">
             jQuery.extend(jQuery.validator.messages, {
                 required: "Te pole jest wymagane",
@@ -70,6 +72,9 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="main">Serwis ogłoszeń</a>
+                    <c:if  test="${user_id!=null}">
+                    <a class="navbar-brand" href="MyStamps">Twoje Znaczki</a>
+                    </c:if>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

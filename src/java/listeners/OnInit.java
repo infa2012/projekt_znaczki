@@ -5,7 +5,9 @@
  */
 package listeners;
 
+import db.DbCollection;
 import db.DbMessage;
+import db.DbStamp;
 import db.DbUser;
 import helpers.ConsoleHelper;
 import java.util.HashMap;
@@ -36,6 +38,8 @@ public class OnInit implements ServletContextListener
 
             HashMap dbUserMap = new HashMap();
             HashMap dbMessageMap = new HashMap();
+            HashMap dbStampMap = new HashMap();
+            HashMap dbCollectionMap = new HashMap();
 
             DbUser dbUser = new DbUser();
             dbUserMap.put("result", dbUser.checkIfMappedTableFielsAreUpToDateWithDatabase());
@@ -43,9 +47,20 @@ public class OnInit implements ServletContextListener
             DbMessage dbMessage = new DbMessage();
             dbMessageMap.put("result", dbMessage.checkIfMappedTableFielsAreUpToDateWithDatabase());
             dbMessageMap.put("table_name", dbMessage.getTableName());
-
+            
+            DbStamp dbStamp = new DbStamp();
+            dbStampMap.put("result", dbStamp.checkIfMappedTableFielsAreUpToDateWithDatabase());
+            dbStampMap.put("table_name", dbStamp.getTableName());
+            
+            DbCollection dbCollection = new DbCollection();
+            dbCollectionMap.put("result", dbCollection.checkIfMappedTableFielsAreUpToDateWithDatabase());
+            dbCollectionMap.put("table_name", dbCollection.getTableName());
+            
+            
             resultsOfChecking.add(dbUserMap);
             resultsOfChecking.add(dbMessageMap);
+            resultsOfChecking.add(dbStampMap);
+            resultsOfChecking.add(dbCollectionMap);
 
             for (HashMap dbClass : resultsOfChecking)
             {

@@ -85,6 +85,18 @@ public class AccessHelper
             return false;
         }
     }
+    
+    public static boolean checkIfLoggedInAs(HttpSession session, String who)
+    {
+        if (session.getAttribute("user_id") != null && who.equals(session.getAttribute("user_id")))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
     public static boolean checkGETParamNumberNotNull(HttpServletRequest request, String param)
     {

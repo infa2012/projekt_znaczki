@@ -22,7 +22,7 @@ public class DbStamp implements DbActionsInterface{
     private final String tableName = "stamp";
     private final String[] tableFields =
     {
-        "id", "name", "added_on", "modified_on", "print_year", "notes", "user_id"
+        "id", "name", "added_on", "modified_on", "print_year", "notes", "price", "user_id"
     };
     private final Connection connectionHandler = DbConnection.getInstance().getConnectionHandler();
     private final DbHelper dbHelper = new DbHelper(tableName, tableFields, connectionHandler);
@@ -77,7 +77,7 @@ public class DbStamp implements DbActionsInterface{
     
     public LinkedList<HashMap> getUserStamps(int userId)
     {
-        String query = "SELECT id, name, print_year, notes, user_id, added_on, modified_on FROM stamp WHERE user_id = '" + userId + "'";
+        String query = "SELECT id, name, print_year, notes, user_id, added_on, modified_on, price FROM stamp WHERE user_id = '" + userId + "'";
 
         LinkedList<HashMap> stampList = new LinkedList<>();
 
@@ -93,6 +93,7 @@ public class DbStamp implements DbActionsInterface{
                 stamp.put("name", rs.getString("name"));
                 stamp.put("notes", rs.getString("notes"));
                 stamp.put("print_year", rs.getString("print_year"));
+                stamp.put("price", rs.getString("price"));
                 stamp.put("user_id", rs.getString("user_id"));
                 stamp.put("added_on", rs.getString("added_on"));
                 stamp.put("modified_on", rs.getString("modified_on"));

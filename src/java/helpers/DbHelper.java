@@ -88,7 +88,7 @@ public class DbHelper
 
         return sql;
     }
-
+    
     /**
      * Generuje część sql'a związanego z warunkami WHERE
      *
@@ -96,6 +96,7 @@ public class DbHelper
      * wiadomo.
      * @return
      */
+    
     private String prepareWherePartSql(HashMap where)
     {
         String sql = " WHERE ";
@@ -216,6 +217,8 @@ public class DbHelper
         return returnMap;
     }
 
+
+    
     /**
      *
      * @param query

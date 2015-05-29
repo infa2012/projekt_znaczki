@@ -18,7 +18,7 @@ public class DbCollection implements DbActionsInterface{
     private final String tableName = "collection";
     private final String[] tableFields =
     {
-        "id", "name", "for_sale", "user_id"
+        "id", "name", "user_id"
     };
     private final Connection connectionHandler = DbConnection.getInstance().getConnectionHandler();
     private final DbHelper dbHelper = new DbHelper(tableName, tableFields, connectionHandler);

@@ -89,7 +89,38 @@ public class DbHelper
         return sql;
     }
     
-    /**
+    public String getCustomSelectSql(HashMap<String,String> cols, String whereSQL){
+        return this.prepareSelectPart(cols) + " " + whereSQL;
+    }
+    
+
+    private String prepareSelectPart(HashMap<String,String> what){
+        String sql = "SELECT ";
+        int i = what.size();
+        
+        for (String key : what.keySet()){
+            String value;
+            value = what.get(key);
+            if ( --i == 0 )
+            {
+                if (!value.equals(""))
+                    sql += value + " AS " + key;
+                else
+                    sql += key;
+            }
+            else
+            {
+                if (!value.equals(""))
+                    sql += value + " AS " + key + ", ";
+                else
+                    sql += key + ", ";
+            }
+        }
+        
+        return sql;
+    }
+
+        /**
      * Generuje część sql'a związanego z warunkami WHERE
      *
      * @param where - kluczem jest nazwa pola w bazie danych, a z wartością
@@ -250,6 +281,32 @@ public class DbHelper
         return list;
     }
 
+    public LinkedList<HashMap> executeCustomSelectWMR(String[] cols, String query)
+    {
+        LinkedList list = new LinkedList();
+        
+        try
+        {
+            Statement statement = connectionHandler.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next())
+            {
+                HashMap map = new HashMap();
+                for (int i = 0; i < cols.length; i++)
+                {
+                    map.put(cols[i], rs.getString(tableFields[i]));
+                }
+                list.add(map);
+            }
+        }
+        catch (SQLException e)
+        {
+            ExceptionHelper.displaySqlExpcetionError(e, query);
+        }
+
+        return list;
+    }
+    
     private LinkedList getTableColumns()
     {
         DbConnection dbConnection = DbConnection.getInstance();

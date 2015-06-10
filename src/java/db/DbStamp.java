@@ -108,4 +108,10 @@ public class DbStamp implements DbActionsInterface{
 
         return stampList;
     }
+        public LinkedList<HashMap> getAllForSklep(double price)
+    {
+        String query = "SELECT id, name, print_year, notes, user_id, added_on, modified_on, price FROM stamp WHERE price > '" + price + "'";
+
+        return dbHelper.executeSelectWithMultipleRows(query);
+    }
 }

@@ -74,6 +74,7 @@
                     <a class="navbar-brand" href="main">Serwis ogłoszeń</a>
                     <c:if  test="${user_id!=null}">
                     <a class="navbar-brand" href="MyStamps">Twoje Znaczki</a>
+                    <a class="navbar-brand" href="StampExchange">Kup znaczki</a>
                     </c:if>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->

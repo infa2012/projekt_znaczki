@@ -17,63 +17,15 @@ import java.util.LinkedList;
  *
  * @author krzysztof
  */
-public class DbStamp implements DbActionsInterface{
+public class DbStamp extends DbBase{
 
-    private final String tableName = "stamp";
-    private final String[] tableFields =
-    {
-        "id", "name", "added_on", "modified_on", "print_year", "notes", "price", "user_id"
-    };
-    private final Connection connectionHandler = DbConnection.getInstance().getConnectionHandler();
-    private final DbHelper dbHelper = new DbHelper(tableName, tableFields, connectionHandler);
+    public DbStamp(){
+        this.tableName = "stamp";
+        this.tableFields = new String[]{"id", "name", "added_on", "modified_on",
+                            "print_year", "notes", "price", "user_id"};
+        this.init();
+    }
     
-    @Override
-    public int create(HashMap values) {
-        String query = dbHelper.getInsertSql(values);
-
-        return dbHelper.executeInsert(query, values);    }
-
-    @Override
-    public boolean update(HashMap values, HashMap where) {
-        String query = dbHelper.getUpdateSql(values, where);
-
-        return dbHelper.executeUpdate(query, values);
-    }
-
-    @Override
-    public boolean delete(HashMap where) {
-        String query = dbHelper.getDeleteSql(where);
-
-        return dbHelper.executeDelete(query);
-    }
-
-    @Override
-    public HashMap get(HashMap where) {
-        String query = dbHelper.getSelectSql(where);
-        query += " LIMIT 1";
-
-        return dbHelper.executeSelectWithSingleRow(query);
-    }
-
-    @Override
-    public LinkedList<HashMap> getAll(HashMap where)
-    {
-        String query = dbHelper.getSelectSql(where);
-
-        return dbHelper.executeSelectWithMultipleRows(query);
-    }
-
-    @Override
-    public String getTableName()
-    {
-        return tableName;
-    }
-
-    @Override
-    public boolean checkIfMappedTableFielsAreUpToDateWithDatabase()
-    {
-        return dbHelper.checkIfMappedTableFielsAreUpToDateWithDatabase();
-    }
     
     public LinkedList<HashMap> getUserStamps(int userId)
     {

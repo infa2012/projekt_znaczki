@@ -60,7 +60,31 @@ public class DbStamp extends DbBase{
 
         return stampList;
     }
-        public LinkedList<HashMap> getAllForSklep(double price)
+
+    
+    public int getUserStampNum(int userId)
+    {
+        String query = "SELECT COUNT(*) as num FROM stamp WHERE user_id=" + userId + ";";
+        int num = -1;
+        
+        try{
+            Statement statement = this.connectionHandler.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next())
+                num = rs.getInt("num");
+        }
+        catch (SQLException e)
+        {
+            System.out.print("Error " + e);
+        }
+        
+        return num;
+
+    }
+    
+    
+    public LinkedList<HashMap> getAllForSklep(double price)
     {
         String query = "SELECT id, name, print_year, notes, user_id, added_on, modified_on, price FROM stamp WHERE price > '" + price + "'";
 

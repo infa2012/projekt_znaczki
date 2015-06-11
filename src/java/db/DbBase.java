@@ -28,17 +28,11 @@ public abstract class DbBase implements DbActionsInterface{
     
     public LinkedList<HashMap> customGetAll(HashMap<String,String> keys, String query){
         query = dbHelper.getCustomSelectSql(keys, query);
-        System.out.println("oto ono: \n\n"+query);
         String[] cols = new String[keys.size()];
-        
-        System.out.println();
-        System.out.println("Kolumny: ");
         int i = 0;
         for (String k : keys.keySet())
             cols[i++] = k;
         
-        for (String str : cols)
-            System.out.println(str);
         return dbHelper.executeCustomSelectWMR(cols, query);
     }
             

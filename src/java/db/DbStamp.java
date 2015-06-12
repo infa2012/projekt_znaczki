@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -60,7 +61,6 @@ public class DbStamp extends DbBase{
 
         return stampList;
     }
-
     
     public int getUserStampNum(int userId)
     {
@@ -82,7 +82,28 @@ public class DbStamp extends DbBase{
         return num;
 
     }
-    
+        
+    public HashMap getAllAboutStamp(int stampId)
+    {
+        HashMap retval;
+        
+        HashMap<String,String> keys = new HashMap<>();
+        keys.put("stamp_id", "s.id");
+        keys.put("name", "name");
+        keys.put("added_on", "added_on");
+        keys.put("modified_on", "modified_on");
+        keys.put("print_year", "print_year");
+        keys.put("notes", "notes");
+        keys.put("price", "price");
+        keys.put("image_id", "id");
+        
+        String query = "stamp s LEFT JOIN image i ON s.id=i.stamp_id";
+        
+        retval = dbHelper.executeCustomSelectWSR(keys, query);
+        //List kolekcje = new LinkedList<HashMap>();
+        //retval.put("kolekcje", kolekcje);
+        return retval;
+    }
     
     public LinkedList<HashMap> getAllForSklep(double price)
     {
@@ -90,4 +111,5 @@ public class DbStamp extends DbBase{
 
         return dbHelper.executeSelectWithMultipleRows(query);
     }
+    
 }

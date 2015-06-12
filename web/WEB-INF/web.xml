@@ -21,8 +21,24 @@
         </init-param>
     </filter>
 
-  <filter-mapping>
-    <filter-name>CharsetFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
+    <filter-mapping>
+        <filter-name>CharsetFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+  
+    <context-param> 
+        <description>Lokalizacja zapisywanych plików.</description>
+        <param-name>file-upload</param-name> 
+        <param-value>
+            /var/www/imgs/
+        </param-value> 
+    </context-param>
+    
+    <context-param> 
+        <description>Lokalizacja tymczasowego zapisu plików.</description>
+        <param-name>tmp-file-upload</param-name> 
+        <param-value>
+            /tmp/
+        </param-value> 
+    </context-param>
 </web-app>

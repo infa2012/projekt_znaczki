@@ -89,12 +89,13 @@ public class DbHelper
         return sql;
     }
     
-    public String getCustomSelectSql(HashMap<String,String> cols, String whereSQL){
+    public String getCustomSelectSql(HashMap<String,String> cols, String whereSQL)
+    {
         return this.prepareSelectPart(cols) + " " + whereSQL;
     }
     
-
-    private String prepareSelectPart(HashMap<String,String> what){
+    private String prepareSelectPart(HashMap<String,String> what)
+    {
         String sql = "SELECT ";
         int i = what.size();
         
@@ -248,7 +249,34 @@ public class DbHelper
         return returnMap;
     }
 
+    public HashMap executeCustomSelectWSR(String[] cols, String query)
+    {
+        HashMap returnMap = new HashMap();
+        
+        try
+        {
+            Statement statement = connectionHandler.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next())
+                for (int i = 0; i < cols.length; i++)
+                {
+                    returnMap.put(cols[i], rs.getString(tableFields[i]));
+                }
+        }
+        catch (SQLException e)
+        {
+            ExceptionHelper.displaySqlExpcetionError(e, query);
+        }
 
+        return returnMap;
+    }
+    
+    public HashMap executeCustomSelectWSR(HashMap<String,String> keys, String query)
+    {
+        query = getCustomSelectSql(keys, query);
+        String[] cols = keys.keySet().toArray(new String[0]);
+        return executeCustomSelectWSR(cols, query);
+    }
     
     /**
      *
@@ -305,6 +333,13 @@ public class DbHelper
         }
 
         return list;
+    }
+    
+    public LinkedList<HashMap> executeCustomSelectWMR(HashMap<String,String> keys, String query)
+    {
+        query = getCustomSelectSql(keys, query);
+        String[] cols = keys.keySet().toArray(new String[0]);
+        return executeCustomSelectWMR(cols, query);
     }
     
     private LinkedList getTableColumns()

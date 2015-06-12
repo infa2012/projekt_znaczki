@@ -37,6 +37,7 @@
             
             <div class="form-group">
                 <label for="name" class="col-sm-2 control-label">Obrazek</label>
+
                 <div class="col-sm-5">
                     <div class="input-group">
                         <span class="input-group-btn">
@@ -48,6 +49,9 @@
                         <input type="text" id="file-view" class="form-control" placeholder="..." disabled="true">
                         <input type="file" id="file-control" name="image" style="display: none">
                     </div>
+                    <div class="img-cont" style="margin-top: 25px">
+                        <img src="img?id=${stamp["id"]}"/>
+                    </div>
                 </div>
             </div>  
 
@@ -58,6 +62,16 @@
                 $('#file-control').change(function() {
                     $('#file-view').val($(this).val());
                 });
+                
+                $(document).ready(function(){
+                        $(".img-cont img").each( function(i){
+                            if (this.naturalHeight>this.naturalWidth){
+                                $(this).addClass("stretch-height");
+                            }else{
+                                $(this).addClass("stretch-width");
+                            }
+                        });
+                   });
             </script>            
 
             <br />

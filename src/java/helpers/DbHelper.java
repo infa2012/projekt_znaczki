@@ -322,7 +322,7 @@ public class DbHelper
                 HashMap map = new HashMap();
                 for (int i = 0; i < cols.length; i++)
                 {
-                    map.put(cols[i], rs.getString(tableFields[i]));
+                    map.put(cols[i], rs.getString(cols[i]));
                 }
                 list.add(map);
             }

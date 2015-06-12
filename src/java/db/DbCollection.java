@@ -51,5 +51,5 @@ public class DbCollection extends DbBase{
         
         return this.customGetAll(s, q2);
     }
-
+    
 }

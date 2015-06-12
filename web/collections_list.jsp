@@ -14,7 +14,7 @@
                 <a href="MyStamps" class="list-group-item${activeCol==-1?" active":""}">
                     Moje znaczki <span class="badge">${allStampsNum}</span>
                 </a>
-                <a href="AddNewCollection" class="list-group-item">
+                <a href="CollectionEdit" class="list-group-item">
                     Nowa Kolekcja <span class="badge" style="font-weight:bold">+</span>
                 </a>
             </div>
@@ -90,7 +90,6 @@
                             }else{
                                 $(this).addClass("stretch-width");
                             }
-                            console.log(this.naturalWidth + " x " + this.naturalHeight);
                         });
                    });
                 </script>

@@ -21,7 +21,7 @@
                 
             <div class="list-group">
                 <c:forEach items="${collections}" var="collection">
-                <a href="AddNewCollection" class="list-group-item${activeCol==collection.id?" active":""}">
+                <a href="CollectionEdit?id=${collection.id}" class="list-group-item${activeCol==collection.id?" active":""}">
                     ${collection.name}<span class="badge">${collection.size}</span>
                 </a>
                 </c:forEach>

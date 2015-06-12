@@ -48,7 +48,7 @@ public abstract class DbBase implements DbActionsInterface{
     public boolean update(HashMap values, HashMap where)
     {
         String query = dbHelper.getUpdateSql(values, where);
-
+        System.out.println(query);
         return dbHelper.executeUpdate(query, values);
     }
 
@@ -56,7 +56,7 @@ public abstract class DbBase implements DbActionsInterface{
     public boolean delete(HashMap where)
     {
         String query = dbHelper.getDeleteSql(where);
-
+        System.out.println(query);
         return dbHelper.executeDelete(query);
     }
 

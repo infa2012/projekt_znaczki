@@ -12,6 +12,7 @@ import helpers.AccessHelper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -61,6 +62,10 @@ public class CollectionEdit extends HttpServlet {
                 HashMap where = new HashMap();
                 where.put("id", id);
                 stampCol.putAll(dc.get(where));
+                
+//                for (Map.Entry e : stampCol.entrySet())
+//                    System.out.println(e.getKey()+" : "+e.getValue());
+                
                 if (stampCol.get("user_id").equals(session.getAttribute("user_id"))){
                     request.setAttribute("col", stampCol);
                     request.setAttribute("page_title", "Edycja kolekcji "+stampCol.get("name"));
@@ -115,7 +120,7 @@ public class CollectionEdit extends HttpServlet {
             sUserId = Integer.parseInt( session.getAttribute("user_id").toString() );
             DbCollection dbc = new DbCollection();
             
-            if (request.getAttribute("id")!=null) // to edycja
+            if (request.getParameter("id") != null) // to edycja
             {
                 id = Integer.parseInt( request.getParameter("id") );
                 HashMap where = new HashMap();
@@ -123,8 +128,11 @@ public class CollectionEdit extends HttpServlet {
                 HashMap stampCol = dbc.get(where);
                 if (Integer.parseInt( stampCol.get("user_id").toString() )==sUserId) // zgadza się własność
                 {
+                    System.out.println("Kasuje="+request.getParameter("remove"));
                     if (request.getParameter("remove") != null ) { //polecenie zniszczenia kolekcji
+                        
                         dbc.delete(where);
+                        response.sendRedirect("MyStamps");
                     }else{
                         if (!request.getParameter("name").equals(stampCol.get("name"))){ // save name
                             HashMap what = new HashMap();

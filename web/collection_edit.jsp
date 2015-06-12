@@ -11,7 +11,7 @@
 
     <jsp:body>
         <form class="form-horizontal" id="validation_form" method="post">
-            <c:if test="${col['id']}">
+            <c:if test="${col.id != null}">
                 <input type="hidden" name="id" value="${col["id"]}"/>
             </c:if>
             <div class="form-group">
@@ -21,11 +21,11 @@
                 </div>
             </div>
             
-            <c:if test="${col['id']}">
+            <c:if test="${col.id != null}">
             <div class="form-group">
                 <label for="delete" class="col-sm-2 control-label">Usuń kolekcję</label>
                 <div class="col-sm-5">
-                    <input type="checkbox" class="form-control" id="delete" name="remove" value="false">                                       
+                    <input type="checkbox" class="form-control" id="delete" name="remove" />                                       
                 </div>
             </div>
             </c:if>
@@ -52,7 +52,7 @@
                 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-5">
-                    <button type="submit" class="btn btn-primary">${col["id"]?"Edytuj Kolekcję":"Dodaj Kolekcję"}</button>
+                    <button type="submit" class="btn btn-primary">${col["id"]!=null?"Edytuj Kolekcję":"Dodaj Kolekcję"}</button>
                 </div>
             </div>
         </form>

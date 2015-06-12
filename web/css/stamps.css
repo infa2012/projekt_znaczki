@@ -25,12 +25,29 @@
 .stamp-notes {
     min-width: 152px;
 }
+
 .stamp-notes:before {
   content: "";
   width: 15em;
   display: block;
   overflow: hidden;
 }
+
 .stamp-date {
     color: gray;
+}
+
+.img-cont {
+    width: 164px;
+    height: 164px;
+}
+
+.stretch-height{
+    max-height: 100%;
+    min-height: 100%
+}
+
+.stretch-width{
+    max-width: 100%;
+    min-width: 100%;
 }

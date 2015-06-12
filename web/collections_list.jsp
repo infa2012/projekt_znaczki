@@ -28,7 +28,7 @@
                 
             </div>
         </div>
-        <div class=""
+        <div class="">
         <c:choose>
             <c:when test="${fn:length(stamps_in_collection) > 0}">
                 <div class="container">
@@ -47,7 +47,10 @@
                             <div class="panel-body">
                                 <span class="stamp-date"> ${stamp.added_on}</span>
                                 <br />
-                                <img data-src="holder.js/164x164" class="pull-right " alt="holder" title="Brak Obrazka">
+                                <div class="img-cont pull-right">
+                                    <img src="img?id=${stamp.id}" title="Brak Obrazka">
+<!--                                <img data-src="holder.js/164x164" class="pull-right " alt="holder" title="Brak Obrazka">-->
+                                </div>
                                 <span class="stamp-notes"> ${stamp.notes} </span>
                             </div>
                             <c:if test="${stamp.user}">
@@ -71,25 +74,36 @@
                     </div>
                 </div>
                 <script>
-                   $(document).ready(function(){
-                       $(".panel").mouseenter(function(){
-                           $(this).removeClass("panel-default");
-                           $(this).addClass("panel-primary");
-                       });
-                       $(".panel").mouseleave(function(){
-                           $(this).removeClass("panel-primary");
-                           $(this).addClass("panel-default");
-                       });
+                    $(document).ready(function(){
+                        $(".panel").mouseenter(function(){
+                            $(this).removeClass("panel-default");
+                            $(this).addClass("panel-primary");
+                        });
+                        $(".panel").mouseleave(function(){
+                            $(this).removeClass("panel-primary");
+                            $(this).addClass("panel-default");
+                        });
+
+                        $(".img-cont img").each( function(i){
+                            if (this.naturalHeight>this.naturalWidth){
+                                $(this).addClass("stretch-height");
+                            }else{
+                                $(this).addClass("stretch-width");
+                            }
+                            console.log(this.naturalWidth + " x " + this.naturalHeight);
+                        });
                    });
                 </script>
         </c:when>
-                <c:otherwise>
-                    <div class="alert alert-warning">
-                        <a href="#" class="close" data-dismiss="alert">&times;</a>
-                        <strong>Nie masz żadnych znaczków.</strong>
-                    </div>
-                </c:otherwise>
+            <c:otherwise>
+                <div class="alert alert-warning">
+                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    <strong>Nie masz żadnych znaczków.</strong>
+                </div>
+            </c:otherwise>
                     
             </c:choose>
+                
+                
         </jsp:body>
     </t:template>
